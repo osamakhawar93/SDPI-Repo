@@ -7,6 +7,7 @@
  * @package sdpi
  */
 
+
 if ( ! function_exists( 'sdpi_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
@@ -122,19 +123,31 @@ add_action( 'widgets_init', 'sdpi_widgets_init' );
 function sdpi_scripts() {
 
 	/*Adding Bootstrap 4 */
-	wp_enqueue_style('bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', array(), false);
+	wp_enqueue_style('bootstrap', get_template_directory_uri() . '/assets/css/bootstrap.min.css', array(), false);
 
-	wp_enqueue_style( 'sdpi-style', get_stylesheet_uri() );
+	//Slick
+	wp_enqueue_style('slick-css', get_template_directory_uri() . '/assets/css/slick.css', array(), false);
+	wp_enqueue_style('slick-theme-css', get_template_directory_uri() . '/assets/css/slick-theme.css', array(), false);
+	wp_enqueue_script( 'slick-js', get_template_directory_uri() . '/assets/js/slick.min.js', array(), '20151217', true );
 
-	wp_enqueue_script( 'sdpi-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
 
-	wp_enqueue_script( 'sdpi-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
+	wp_enqueue_style( 'sdpi-style', get_stylesheet_uri());
 
-	wp_enqueue_script( 'jquery', get_template_directory_uri() . '/js/jquery.min.js', array(), '20151220', true );
+	wp_enqueue_style( 'sdpi-responsive',get_template_directory_uri().'/assets/css/responsiveness.css');
+	
+	wp_enqueue_style( 'helvetica-nue', get_template_directory_uri().'/assets/fonts/helvetica-nue/style.css');
 
-	wp_enqueue_script( 'popper', get_template_directory_uri() . '/js/popper.min.js', array(), '20151217', true );
+	wp_enqueue_script( 'sdpi-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), '20151215', true );
 
-	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', array(), '20151218', true );
+	wp_enqueue_script( 'sdpi-skip-link-focus-fix', get_template_directory_uri() . '/assets/js/skip-link-focus-fix.js', array(), '20151215', true );
+
+	wp_enqueue_script( 'jquery', get_template_directory_uri() . '/assets/js/jquery.min.js', array(), '20151220', true );
+
+	//wp_enqueue_script( 'popper', get_template_directory_uri() . '/assets/js/popper.min.js', array(), '20151217', true );
+
+	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/assets/js/bootstrap.min.js', array(), '20151218', true );
+
+	wp_enqueue_script( 'custom-js', get_template_directory_uri() . '/assets/js/custom.js', array(), '20151217', true );
 
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -170,3 +183,44 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+
+/* Theme Options */
+
+if( function_exists('acf_add_options_page') ) {
+	
+	acf_add_options_page(array(
+		'page_title' 	=> 'Theme General Settings',
+		'menu_title'	=> 'Theme Settings',
+		'menu_slug' 	=> 'theme-general-settings',
+		'capability'	=> 'edit_posts',
+		'redirect'		=> false
+	));
+}
+
+
+/* Adding Custom post type of Trainings */
+// Our custom post type function
+function create_posttype() {
+ 
+    register_post_type( 'trainings',
+    // CPT Options
+        array(
+            'labels' => array(
+                'name' => __( 'Trainings' ),
+                'singular_name' => __( 'Training Session' )
+            ),
+            'public' => true,
+			'has_archive' => true,
+			//'menu_icon'           => get_template_directory_uri().'/assets/images/upcoming-trainings.svg',
+            'rewrite' => array('slug' => 'trainings'),
+        )
+    );
+}
+// Hooking up our function to theme setup
+add_action( 'init', 'create_posttype' );
+
+
+// Adding About sidebar Menu 
+register_nav_menus( array(  
+	'secondary' => __('About', 'sdpi')  
+)); 
