@@ -224,3 +224,158 @@ add_action( 'init', 'create_posttype' );
 register_nav_menus( array(  
 	'secondary' => __('About', 'sdpi')  
 )); 
+
+
+/**
+ * About Shortcodes: Fetch Upcoming Trainings
+ */
+
+function wpb_demo_shortcode() { 
+	get_template_part( 'template-parts/upcoming', 'trainings' );
+} 
+	// register shortcode
+add_shortcode('upcomingTrainings', 'wpb_demo_shortcode'); 
+
+/**
+ * About Shortcodes : Fetch Training Calendar
+ */
+
+/**
+ * Adding scripts for Ajax
+ */
+function filters_training() {
+	wp_enqueue_script( 'about-ajax-script', get_template_directory_uri() . '/assets/js/about.js', array('jquery') );
+	wp_localize_script( 'about-ajax-script', 'my_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+}
+add_action( 'wp_enqueue_scripts', 'filters_training' );
+
+// Fire AJAX action for both logged in and non-logged in users
+add_action('wp_ajax_training_calendar_function', 'training_calendar_function');
+add_action('wp_ajax_nopriv_training_calendar_function', 'training_calendar_function');
+
+
+function training_calendar_function(){
+
+	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+
+	if(isset($_POST['page'])){
+		/* Pagination vars */
+		$page = sanitize_text_field($_POST['page']);
+
+		$cur_page = $page;
+
+		$next_page = $cur_page + 1;
+
+        $page -= 1;
+
+        $per_page = 1;
+
+        $previous_btn = true;
+
+        $next_btn = true;
+
+        $first_btn = true;
+
+		$last_btn = true;
+	
+		$start = $page * $per_page;
+
+
+		/**
+		 * This code is just to fetch the total posts for Training to help with pagination
+		 */
+		$totalPosts = count(get_posts(array(
+			'post_type' => 'trainings',
+			'post_status'=>'publish'
+		)));
+
+
+
+		$args = array(
+			'post_type'=> 'trainings',
+			'paged' => $paged,
+			'posts_per_page' => $per_page,
+			'offset'=> $start
+		);
+		
+
+	$query = new WP_Query( $args );
+	$totalPosts = $query->found_posts;
+
+	$response = '';
+	if( $query->have_posts() ) :
+		echo '<div class="row">';
+		while( $query->have_posts() ): $query->the_post();
+		$response .= get_template_part('template-parts/training','calendar');			
+		endwhile;
+		echo '</div>';
+		wp_reset_postdata(); wp_reset_query();
+	else :
+		echo 'No parts found';
+	endif;
+
+
+	$no_of_paginations = ceil($totalPosts / $per_page);
+
+	if($totalPosts > $per_page){
+
+		if ($cur_page >= 7) {
+			$start_loop = $cur_page - 3;
+			if ($no_of_paginations > $cur_page + 3)
+				$end_loop = $cur_page + 3;
+			else if ($cur_page <= $no_of_paginations && $cur_page > $no_of_paginations - 6) {
+				$start_loop = $no_of_paginations - 6;
+				$end_loop = $no_of_paginations;
+			} else {
+				$end_loop = $no_of_paginations;
+			}
+		} else {
+			$start_loop = 1;
+			if ($no_of_paginations > 7)
+				$end_loop = 7;
+			else
+				$end_loop = $no_of_paginations;
+		}
+	
+		// Pagination Buttons logic     
+		$pag_container .= "
+		<div class='cvf-universal-pagination'>
+			<ul class='custom-pagination'>";
+	
+		if ($previous_btn && $cur_page > 1) {
+			$pre = $cur_page - 1;
+			$pag_container .= "<li onClick='changePage(this)' p='$pre' class='active mr-0'><img src='".get_template_directory_uri()."/assets/images/left-page.svg'/></li>";
+		} else if ($previous_btn) {
+			$pag_container .= "<li  class='inactive mr-0'><img src='".get_template_directory_uri()."/assets/images/left-page.svg'/></li>";
+		}
+		for ($i = $start_loop; $i <= $end_loop; $i++) {
+	
+			if ($cur_page == $i)
+				$pag_container .= "<li onClick='changePage(this)' p='$i' class = 'selected' >{$i}</li>";
+			else
+				$pag_container .= "<li  onClick='changePage(this)' p='$i' class='active'>{$i}</li>";
+		}
+	
+		if ($next_btn && $cur_page < $no_of_paginations) {
+			$nex = $cur_page + 1;
+			$pag_container .= "<li onClick='changePage(this)' p='$nex' class='active'><img src='".get_template_directory_uri()."/assets/images/right-page.svg'/></li>";
+		} else if ($next_btn) {
+			$pag_container .= "<li  class='inactive'><img src='".get_template_directory_uri()."/assets/images/right-page.svg'/></li>";
+		}
+	
+	
+		$pag_container = $pag_container . "
+			</ul>
+		</div>";
+	
+		// We echo the final output
+		echo '<hr class="pagination-separator"/><div class = "cvf-pagination-nav">' . $pag_container . '</div>';
+
+	}
+	
+	}
+
+	die();
+}
+
+add_shortcode('training_calendar', 'training_calendar_function'); 
