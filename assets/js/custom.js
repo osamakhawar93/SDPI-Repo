@@ -1,7 +1,49 @@
 jQuery(document).ready(function($){
-    $('.publications-slider').slick({
+
+  $(".other-websites").click(function(){
+    $("#other-websites").modal("show");
+  })
+
+  $('a[href*="#"]')
+  // Remove links that don't actually link to anything
+  .not('[href="#"]')
+  .not('[href="#0"]')
+  .click(function(event) {
+    // On-page links
+    if (
+      location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
+      && 
+      location.hostname == this.hostname
+    ) {
+      // Figure out element to scroll to
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+      // Does a scroll target exist?
+      if (target.length) {
+        // Only prevent default if animation is actually gonna happen
+        event.preventDefault();
+        $('html, body').animate({
+          scrollTop: target.offset().top
+        }, 1000, function() {
+          // Callback after animation
+          // Must change focus!
+          var $target = $(target);
+          $target.focus();
+          if ($target.is(":focus")) { // Checking if the target was focused
+            return false;
+          } else {
+            $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
+            $target.focus(); // Set focus again
+          };
+        });
+      }
+    }
+  });
+
+	if($('.publications-slider').length>0){
+		 $('.publications-slider').slick({
         arrows:true,
-        infinite: true,
+        loop: true,
         slidesToShow: 3,
         slidesToScroll: 3,
         dots: true,
@@ -36,12 +78,24 @@ jQuery(document).ready(function($){
           // instead of a settings object
         ]
       });
-    $(".news-slider").slick({
+	}
+   
+	if($(".learning_and_development").length>0){
+		    $(".learning_and_development").slick({
+			  slidesToShow: 1,
+			  slidesToScroll: 1,
+			  dots: true,
+			})
+	}
+	if($(".news-slider").length>0){
+		  $(".news-slider").slick({
         arrows:true,
-        infinite: true,
         slidesToShow: 3,
-        slidesToScroll: 3,
-        dots: true,
+        slidesToScroll: 1,
+        dots: false,
+        autoplay:false,
+        cssEase: 'linear',
+        loop:true,
         prevArrow:"<div class='a-left control-c prev slick-prev'></div>",
         nextArrow:"<div class='a-right control-c next slick-next'></div>",
         responsive: [
@@ -49,8 +103,7 @@ jQuery(document).ready(function($){
             breakpoint: 992,
             settings: {
               slidesToShow: 2,
-              slidesToScroll: 2,
-              infinite: true,
+              slidesToScroll: 1,
               dots: true
             }
           },
@@ -58,7 +111,7 @@ jQuery(document).ready(function($){
             breakpoint: 600,
             settings: {
               slidesToShow: 2,
-              slidesToScroll: 2
+              slidesToScroll: 1
             }
           },
           {
@@ -73,6 +126,8 @@ jQuery(document).ready(function($){
           // instead of a settings object
         ]
       });
+	}
+  
 
     /*Sticky Header*/
 	$(window).scroll(function($){
@@ -93,5 +148,9 @@ jQuery(document).ready(function($){
   $(document).on('click', '.sdpi-dropdown', function (e) {
     e.stopPropagation();
   });
+  
+  $(".play-button").click(function(){
+      $("#videoModal").modal("show");
+  })
   
 })

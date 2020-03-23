@@ -13,6 +13,49 @@
 
 	</div><!-- #content -->
 
+
+
+
+<!-- Websites Modal -->
+<div class="modal fade" id="other-websites" tabindex="-1" role="dialog" aria-labelledby="other-websites" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+	<div class="close-modal"> <button type="button" class="close" data-dismiss="modal">×</button> </div>
+      <div class="modal-body">
+		  <h2>SDPI Websites</h2>
+		  <h3>Projects Websites</h3>
+		  <?php $projects_websites =  get_field('projects_websites', 'option');
+		  $other_links =  get_field('other_links', 'option'); ?>
+
+			<ul>
+				<?php
+			 foreach ( $projects_websites as $website): ?>
+				<li>
+					<a href="<?= $website['projects_websites_links'] ?>" target="_blank">
+						<?= $website['projects_websites_name'] ?>
+					</a>
+				</li>
+			<?php endforeach; ?>
+			 </ul>
+		 <h3>Other Websites</h3>
+		 <ul>
+		 <?php 
+		foreach ( $other_links as $website): ?>
+
+			<li>
+				<a href="<?= $website['other_links'] ?>" target="_blank">
+					<?= $website['other_websites_name'] ?>
+				</a>
+			</li>
+	
+		<?php endforeach; ?>
+		</ul>
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- Websites Modal -->
+
 	<footer id="colophon" class="site-footer">
 		<div class="chev-down">
 			<img src="<?= get_template_directory_uri().'/assets/images/chevron-arrow-down.svg'?>"/>
@@ -20,55 +63,62 @@
 		</div>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-2 col-12 copyrights order-9">
+				<div class="col-md-2 col-12 copyrights order-9 order-md-1 order-sm-1 order-lg-1">
 					<?= the_field('copyrights_text', 'option'); ?>
 				</div>
-				<div class="col-md-2 col-6 order-2">
+				<div class="col-md-2 col-6 order-2 order-md-2 order-sm-2 order-lg-2">
 					<h3>Overview</h3>
-					<ul>
-						<li><a href="#">Research Themes</a></li>
-						<li><a href="#">Policy Outreach</a></li>
-						<li><a href="#">Publication</a></li>
-						<li><a href="#">Procurement</a></li>
-					</ul>
+					<?php
+                        wp_nav_menu( array(
+                            'theme_location' => 'overview-menu',
+                            'menu_class' => 'navbar-nav mt-2 mt-lg-0',
+                            'menu_id'        => 'overview-menu'
+                        ) );
+					?>
 				</div>
-				<div class="col-md-2 col-6">
+				<div class="col-md-2 col-6 order-md-3 order-sm-3 order-lg-3">
 					<h3>About Us</h3>
-					<ul>
-						<li><a href="#">Mission statement</a></li>
-						<li><a href="#">Board of Governers</a></li>
-						<li><a href="#">SDPI Staff</a></li>
-						<li><a href="#">Internship Program</a></li>
-						<li><a href="#">Partners</a></li>
-						<li><a href="#">Vacancies</a></li>
-					</ul>
+					<?php
+                        wp_nav_menu( array(
+                            'theme_location' => 'about-menu-footer',
+                            'menu_class' => 'navbar-nav mt-2 mt-lg-0',
+                            'menu_id'        => 'about-menu-footer'
+                        ) );
+                    ?>
 					<h3>Support</h3>
 					<ul>
-						<li><a href="#">FAQs</a></li>
-						<li><a href="#">Assistance & Help</a></li>
-						<li><a href="#">Contact Us</a></li>
+					<?php
+                        wp_nav_menu( array(
+                            'theme_location' => 'support-menu-footer',
+                            'menu_class' => 'navbar-nav mt-2 mt-lg-0',
+                            'menu_id'        => 'support-menu-footer'
+                        ) );
+                    ?>
 					</ul>
 				</div>
-				<div class="col-md-2 col-6">
+				<div class="col-md-2 col-6 order-md-4 order-sm-4 order-lg-4">
 					<h3>Learn More</h3>
-					<ul>
-						<li><a href="#">Sign In</a></li>
-						<li><a href="#">About SDPI</a></li>
-						<li><a href="#">Careers</a></li>
-						<li><a href="#">Blog</a></li>
-						<li><a href="#">Media Hub</a></li>
-					</ul>
+					<?php
+                        wp_nav_menu( array(
+                            'theme_location' => 'learn-more-menu-footer',
+                            'menu_class' => 'navbar-nav mt-2 mt-lg-0',
+                            'menu_id'        => 'learn-more-menu-footer'
+                        ) );
+                    ?>
 					<h3>Legal</h3>
-					<ul>
-						<li><a href="#">Terms of Service</a></li>
-						<li><a href="#">Privacy Policy</a></li>
-					</ul>
+					<?php
+                        wp_nav_menu( array(
+                            'theme_location' => 'legal-menu-footer',
+                            'menu_class' => 'navbar-nav mt-2 mt-lg-0',
+                            'menu_id'        => 'legal-menu-footer'
+                        ) );
+                    ?>
 				</div>
-				<div class="col-md-4 col-6">
+				<div class="col-md-4 col-12 order-md-5 order-sm-5 order-lg-5">
 					<h3>Connect</h3>
 					<ul class="connect">
 						<li>
-						<a class="twitter" href="<?= the_field('twitter_url', 'option'); ?>" title="Twitter Link">
+						<a target="_blank" class="twitter" href="<?= the_field('twitter_url', 'option'); ?>" title="Twitter Link">
                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="97.637px" height="97.637px" viewBox="0 0 97.637 97.637" style="enable-background:new 0 0 97.637 97.637;" xml:space="preserve">
                             <g>
                                 <path d="M97.523,18.526c-0.14-0.165-0.371-0.221-0.568-0.131c-2.919,1.295-5.99,2.226-9.153,2.776
@@ -85,7 +135,7 @@
                             </g>
                         </svg>
 					</a>
-					<a class="facebook" href="<?= the_field('facebook_url', 'option'); ?>" title="Facebook Link">
+					<a target="_blank" class="facebook" href="<?= the_field('facebook_url', 'option'); ?>" title="Facebook Link">
                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="96.124px" height="96.123px" viewBox="0 0 96.124 96.123" style="enable-background:new 0 0 96.124 96.123;" xml:space="preserve">
                             <g>
                                 <path d="M72.089,0.02L59.624,0C45.62,0,36.57,9.285,36.57,23.656v10.907H24.037c-1.083,0-1.96,0.878-1.96,1.961v15.803
@@ -95,7 +145,7 @@
                             </g>
                         </svg>
 					</a>
-					<a class="youtube" href="<?= the_field('youtube_url', 'option'); ?>" title="Twitter Link">
+					<a target="_blank" class="youtube" href="<?= the_field('youtube_url', 'option'); ?>" title="Twitter Link">
                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="96.875px" height="96.875px" viewBox="0 0 96.875 96.875" style="enable-background:new 0 0 96.875 96.875;" xml:space="preserve">
                             <g>
                                 <path d="M95.201,25.538c-1.186-5.152-5.4-8.953-10.473-9.52c-12.013-1.341-24.172-1.348-36.275-1.341
@@ -107,7 +157,7 @@
                             </g>
                         </svg>
 					</a>
-					<a class="rss" href="<?= the_field('rss_url', 'option'); ?>" title="RSS Link">
+					<a target="_blank" class="rss" href="<?= the_field('rss_url', 'option'); ?>" title="RSS Link">
 					<svg id="Bold" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><circle cx="3.429" cy="20.571" r="3.429"/><path d="m11.429 24h4.57c0-8.821-7.178-15.999-15.999-16v4.572c6.302.001 11.429 5.126 11.429 11.428z"/><path d="m24 24c0-13.234-10.766-24-24-24v4.571c10.714 0 19.43 8.714 19.43 19.429z"/></svg>
 					</a>
 						</li>
@@ -115,12 +165,12 @@
 					</ul>
 
 					<h3>Newsletter</h3>
-					<!-- <div class="newsletter d-flex align-items-center justify-content-center">
+				 	<div class="newsletter d-flex align-items-center justify-content-center mb-4 mb-md-0">
 						<?php
 						 $shortcode = the_field('newsletter_form_shortcode', 'option');
-						//echo do_shortcode($shortcode);
+							echo do_shortcode($shortcode);
 						 ?>
-					</div> -->
+					</div>
 				</div>
 			</div>
 		</div>

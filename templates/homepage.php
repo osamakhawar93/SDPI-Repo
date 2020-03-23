@@ -6,175 +6,112 @@ get_header();
 <div class="sdpi-container-f">
     <h3 class="section-heading"><?= get_field('new_heading') ?></h3>
     <div class="row">
-        <div class="col-md-9">
-            <div class="video-box">
-                <img src="<?= get_field('new_section_video_placeholder') ?> "/>
+        <div class="col-sm-7 col-md-7 col-lg-8">
+            <div class="video-box" style="background-image:url('<?= get_field('new_section_video_placeholder') ?>')">
+                <div class="play-button">
+                        <div class="right-arrow"></div>
+                </div>
             </div>
         </div>
-        <div class="col-md-3">
-                <?php
-                    $new_arrivals = get_field('new_section_boxes');
-                    $count = 0;
-                    foreach($new_arrivals as $arrival): 
+        <div class="col-sm-5 col-md-5 col-lg-4">
+            <div class="publications-small">
+                    <?php
+                        echo do_shortcode('[fetch_new_arrivals]');
                     ?>
-                    <div class="new-box <?= $count==0?'latest-new-box':'' ?>">
-                        <div class="action-icons">
-                            <?php 
-                            if($count == 0){ ?>
-                                <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-heart-red.svg' ?>"></a>
-                                <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-blue.svg' ?>"></a>
-                            <?php }else{ ?>
-                                <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-heart-white.svg' ?>"></a>
-                                <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-white.svg' ?>"></a>
-                            <?php } ?>
-
-                        </div>
-                        <h4><?= $arrival['new_div_heading']; ?></h4>
-                        <p><?= $arrival['new_div_paragraph']; ?></p>
-                        <p class='read-more'>Read More</p>
-                    </div>
-
-                    <?php 
-                    $count++;
-                    endforeach;?>
+            </div>     
         </div>
     </div>
 </div>
 </section>
 
-<section class="events-section">
+<section class="events-section mb-0 d-flex align-items-center">
+	<div class="sdpi-container-f w-100">
+        <h3 class="section-heading"><p>upcoming&nbsp;<strong>events</strong></p></h3>
 
+		<div class="row">
+			<div class="col-md-4">
+				<!-- Calendar -->
+		            <div class="calendar-wrapper">
+		                  <div class="text-right">
+		                         <select class="calendar-select" id="monthSelect">
+                                        <option value="0">January</option>
+                                        <option value="1">February</option>
+                                        <option value="2">March</option>
+                                        <option value="3">April</option>
+                                        <option value="4">May</option>
+                                        <option value="5">June</option>
+                                        <option value="6">July</option>
+                                        <option value="7">August</option>
+                                        <option value="8">Septembar</option>
+                                        <option value="9">October</option>
+                                        <option value="10">November</option>
+                                        <option value="11">December</option>
+                                </select>
+		                    </div>
+                      <div id="divCal"></div>
+                    </div>
+				<!-- Calendar -->
+			</div>
+			<div class="col-md-8 events-carousel">
+				 
+				
+			</div>
+		</div>
+
+        <p class="text-center mt-5">
+        <a class="viewall_whitebg" href="<?= get_field('events_link')['url'] ?>">View all Events</a>
+        </p>
+	</div>
+   
 </section>
 
 <section class="publications">
     <div class="sdpi-container-f">
         <h3 class="section-heading blue"><?= get_field('publications_section_heading') ?></h3>
             <div class="publications-slider">
-                <div class="slide">
-                    <img src="<?= get_template_directory_uri().'/assets/images/publications-image.jpg'?>" />
-                    <div class="publication-detail">
-                        <div class="action-btns d-inline-flex justify-content-between align-items-center">
-                            <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-heart-white.svg' ?>"></a>
-                            <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-white.svg' ?>"></a>
-                        </div>
-                        <h5>Lorem Ipsum Dolor</h5>
-                        <p>Author Name</p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <img src="<?= get_template_directory_uri().'/assets/images/publications-image.jpg'?>" />
-                    <div class="publication-detail">
-                        <div class="action-btns d-inline-flex justify-content-between align-items-center">
-                            <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-heart-white.svg' ?>"></a>
-                            <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-white.svg' ?>"></a>
-                        </div>
-                        <h5>Lorem Ipsum Dolor</h5>
-                        <p>Author Name</p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <img src="<?= get_template_directory_uri().'/assets/images/publications-image.jpg'?>" />
-                    <div class="publication-detail">
-                        <div class="action-btns d-inline-flex justify-content-between align-items-center">
-                            <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-heart-white.svg' ?>"></a>
-                            <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-white.svg' ?>"></a>
-                        </div>
-                        <h5>Lorem Ipsum Dolor</h5>
-                        <p>Author Name</p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <img src="<?= get_template_directory_uri().'/assets/images/publications-image.jpg'?>" />
-                    <div class="publication-detail">
-                        <h5>Lorem Ipsum Dolor</h5>
-                        <p>Author Name</p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <img src="<?= get_template_directory_uri().'/assets/images/publications-image.jpg'?>" />
-                    <div class="publication-detail">
-                        <div class="action-btns d-inline-flex justify-content-between align-items-center">
-                            <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-heart-white.svg' ?>"></a>
-                            <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-white.svg' ?>"></a>
-                        </div>
-                        <h5>Lorem Ipsum Dolor</h5>
-                        <p>Author Name</p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <img src="<?= get_template_directory_uri().'/assets/images/publications-image.jpg'?>" />
-                    <div class="publication-detail">
-                        <div class="action-btns d-inline-flex justify-content-between align-items-center">
-                            <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-heart-white.svg' ?>"></a>
-                            <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-white.svg' ?>"></a>
-                        </div>
-                        <h5>Lorem Ipsum Dolor</h5>
-                        <p>Author Name</p>
-                    </div>
-                </div>
+                <?php
+                        echo do_shortcode('[getPublicationsForCategory category="" slider="true"]');
+                ?>
             </div>
+            <p class="text-center mt-5">
+            <a class="viewall_yellowbg " href="<?= get_field('publications_link')['url']  ?>">View all Publications</a>
+             </p>
+
+
     </div>
 </section>
 
 
-<section class="latest-news">
+<section class="latest-news mb-0">
     <div class="sdpi-container-f">
         <h3 class="section-heading blue"><?= get_field('latest_news_heading') ?></h3>
             <div class="news-slider">
-                    <div class="news-slide">
-                        <img src="<?= get_template_directory_uri().'/assets/images/publications-image.jpg'?>" />
-                        <div class="date-pin">
-                            <p>dec 15th</p>
-                        </div>
-                        <div class="news-slide-info">
-                            <h6>6th January</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur consectetur adipiscing elit. Curabitur egestas vestibulum egestas leo, et feugiat magna dignissim lobortis, egestas leo, et feugiat magna dignissim lobortis, egestas.</p>
-                        </div>
-                    </div>
-                    <div class="news-slide">
-                        <img src="<?= get_template_directory_uri().'/assets/images/publications-image.jpg'?>" />
-                        <div class="date-pin">
-                            <p>dec 15th</p>
-                        </div>
-                        <div class="news-slide-info">
-                            <h6>6th January</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur consectetur adipiscing elit. Curabitur egestas vestibulum egestas leo, et feugiat magna dignissim lobortis, egestas leo, et feugiat magna dignissim lobortis, egestas.</p>
-                        </div>
-                    </div>
-                    <div class="news-slide">
-                        <img src="<?= get_template_directory_uri().'/assets/images/publications-image.jpg'?>" />
-                        <div class="date-pin">
-                            <p>dec 15th</p>
-                        </div>
-                        <div class="news-slide-info">
-                            <h6>6th January</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur consectetur adipiscing elit. Curabitur egestas vestibulum egestas leo, et feugiat magna dignissim lobortis, egestas leo, et feugiat magna dignissim lobortis, egestas.</p>
-                        </div>
-                    </div>
-                    <div class="news-slide">
-                        <img src="<?= get_template_directory_uri().'/assets/images/publications-image.jpg'?>" />
-                        <div class="date-pin">
-                            <p>dec 15th</p>
-                        </div>
-                        <div class="news-slide-info">
-                            <h6>6th January</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur consectetur adipiscing elit. Curabitur egestas vestibulum egestas leo, et feugiat magna dignissim lobortis, egestas leo, et feugiat magna dignissim lobortis, egestas.</p>
-                        </div>
-                    </div>
-                    <div class="news-slide">
-                        <img src="<?= get_template_directory_uri().'/assets/images/publications-image.jpg'?>" />
-                        <div class="date-pin">
-                            <p>dec 15th</p>
-                        </div>
-                        <div class="news-slide-info">
-                            <h6>6th January</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur consectetur adipiscing elit. Curabitur egestas vestibulum egestas leo, et feugiat magna dignissim lobortis, egestas leo, et feugiat magna dignissim lobortis, egestas.</p>
-                        </div>
-                    </div>
+                <?= get_field('latest_news_shortcode'); ?>
             </div>
+
+            <p class="text-center mt-5">
+            <a class="viewall_whitebg" href="<?= get_field('latest_news_link')['url']  ?>">View all News</a>
+            </p>
     </div>
 </section>
 
+<!-- Modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+
+				<div class="close-modal"> <button type="button" class="close" data-dismiss="modal">×</button> </div>
+				<!-- Modal body -->
+				<div class="modal-body">
+				<iframe class="embed-responsive-item" width="100%" height="500px" src="<?= get_field('video_url') ?>" id="video" allowscriptaccess="always"></iframe>
+				</div>
+
+
+				</div>
+  </div>
+</div>		
 <?php 
 get_footer();
 ?>

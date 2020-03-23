@@ -15,8 +15,8 @@ get_header();
         <img class="about-icon" width="190" src="<?= get_field('main_icon') ?>" alt="Upcoming Trainings Icon"/>
         </div>
     </div>
-    <div class="row mt-5">
-        <div class="col-md-3">
+    <div class="row mt-md-5">
+        <div class="col-md-4 col-lg-3 col-xl-3">
             <?php
            echo wp_nav_menu( array(
             'menu'   => 'About Menu',
@@ -24,9 +24,10 @@ get_header();
             ));
             ?>
         </div>
-        <div class="col-md-9 about-template-content">
+        <div class="col-md-8 col-lg-9 col-xl-9 about-template-content">
             <?= get_field('main_heading') ?>
             <h4><?= get_field('sub_heading') ?></h4>
+           
             <div class="shortcode">
                 <?=  get_field("about_shortcode") ?>
             </div>

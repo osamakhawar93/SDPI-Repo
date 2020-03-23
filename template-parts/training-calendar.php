@@ -1,26 +1,20 @@
-<div class="col-sm-3 col-6 parts-item">
-                        <div class="col-sm w-100 p-0 listing-img">
-                            <a href="<?php the_permalink();?>">
-                            <?php
-                                        if ( has_post_thumbnail() ) { // only print out the thumbnail if it actually has one
-                                            the_post_thumbnail('listing-thumbnail', array('class'=>'img-fluid'));
-                                        } else {
-                                            echo '<img class="img-fluid" alt="No Image Preview" src="'.get_template_directory_uri().'/assets/images/placeholder.png">';
-                                        }
-                                    ?>
-                            </a> 
-                        </div>
-                        <h5>
-                        <?php echo strip_tags(get_the_term_list( $post->ID, 'parts-category', ' ',', ')); ?>
-                        </h5>
-                        <h4>
-                            <a href="<?php the_permalink();?>">
-                                <?php echo mb_strimwidth(get_the_title(), 0, 45, '...'); ?>
-                            </a>
-                        </h4>
+<?php 
+              $start_date = get_post_meta( $post->ID, 'start_date');
+              $end_date = get_post_meta( $post->ID, 'end_date');
+              $start_date = DateTime::createFromFormat('Ymd', $start_date[0]);
+              $end_date = DateTime::createFromFormat('Ymd', $end_date[0]);
+?>
 
 
-                        <a href="<?php the_permalink();?>" class="cd-btn cd-btn-grey">
-                            Contact Us for Details
-                        </a>
-                    </div> 
+
+        <li class="event" data-date="<?=  $start_date->format('M j').' - '.$end_date->format('M j') ?>">
+            <p class="event-date mt-3 d-none d-mobile">
+                <?php echo $start_date->format('M j')."-".$end_date->format('M j'); ?>
+            </p>
+            <h3> 
+                <a class="pl-0" href="<?php the_permalink();?>">
+                    <?php echo get_the_title(); ?>
+                </a>
+            </h3>
+            <p class="training-content"> <?php echo wp_trim_words( get_the_content(), 20); ?></p>
+        </li>

@@ -17,11 +17,16 @@
         <meta charset="<?php bloginfo( 'charset' ); ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="profile" href="https://gmpg.org/xfn/11">
-
+        <link rel="shortcut icon" type="image/png" href="<?= the_field('favicon', 'option'); ?>" />
         <?php wp_head(); ?>
     </head>
 
     <body <?php body_class(); ?>>
+
+        <div class="loader">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 737.03 859.78"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:none;stroke:#2c2c61;stroke-miterlimit:10;stroke-width:0.5px;}.cls-3{fill:#2d1073;}.cls-4{fill:#2c2c61;}</style></defs><title>Asset 1</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="736.78 639.89 368.51 859.49 0.25 639.89 0.25 214.02 368.51 0.29 736.78 214.02 736.78 639.89"/><polygon class="cls-2" points="736.78 639.89 368.51 859.49 0.25 639.89 0.25 214.02 368.51 0.29 736.78 214.02 736.78 639.89"/><polygon class="cls-3" points="122.78 407.49 119.72 496.29 301.85 393.49 304.78 180.69 221.85 228.69 221.72 299.89 61.18 205.49 23.32 227.49 23.32 270.56 180.25 363.36 122.78 407.49"/><polygon class="cls-3" points="101.05 393.49 139.18 368.15 23.32 296.95 23.32 394.95 98.65 439.36 101.05 393.49"/><polygon class="cls-3" points="156.38 150.29 84.12 192.16 203.18 258.02 201.72 216.95 241.18 192.69 156.38 150.29"/><polygon class="cls-3" points="303.85 659.49 262.78 679.49 221.98 658.29 223.72 746.29 303.72 793.89 303.85 659.49"/><path class="cls-4" d="M552.51,134l12,6.93Z"/><polygon class="cls-3" points="186.51 132.69 264.51 175.62 331.45 141.49 333.45 404.42 100.52 536.69 99.18 469.89 23.32 422.56 23.32 626.69 203.05 733.89 203.18 645.36 139.18 607.22 372.12 473.09 595.58 607.49 530.12 646.29 529.98 736.29 713.72 626.69 713.72 418.69 639.98 461.89 639.72 536.55 405.98 404.02 408.12 143.22 474.92 179.89 552.51 134.02 368.51 27.22 186.51 132.69"/><polygon class="cls-3" points="564.51 140.95 570.51 144.42 493.58 191.62 531.32 211.89 532.78 261.09 652.38 192.29 676.65 206.02 506.51 301.75 505.31 225.62 432.12 178.82 432.12 390.42 614.38 493.75 612.78 409.09 547.72 371.75 713.32 277.09 713.32 302.15 601.05 368.02 639.18 393.36 641.58 439.22 713.72 393.75 713.72 227.49 564.51 140.95"/><polygon class="cls-3" points="430.65 654.95 429.45 796.29 510.92 747.75 510.51 656.55 473.85 678.55 430.65 654.95"/><polygon class="cls-3" points="409.05 611.75 475.18 649.36 552.65 609.89 370.51 502.56 188.78 606.95 262.51 648.69 327.85 611.75 325.58 807.09 368.51 832.55 406.92 809.75 409.05 611.75"/><polygon class="cls-1" points="474.92 179.89 564.51 126.56 581.98 137.49 493.58 191.62 474.92 179.89"/><polygon class="cls-1" points="532.78 261.09 654.25 191.62 679.45 204.56 541.72 282.02 532.78 261.09"/><polygon class="cls-1" points="601.05 368.02 718.51 299.22 718.51 273.75 586.78 349.49 601.05 368.02"/></g></g></svg>
+        </div>
+
         <div id="page" class="site">
 
 		<header class="header">
@@ -29,8 +34,8 @@
                 <!-- <a class="navbar-brand" href="#">Navbar</a> -->
                 <div class="header-social">
                     <ul class="navbar-nav flex-row">
-                    <a class="twitter" href="<?= the_field('twitter_url', 'option'); ?>" title="Twitter Link">
-                            <svg class="mr-lg-5 mr-md-5 mr-2" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="97.637px" height="97.637px" viewBox="0 0 97.637 97.637" style="enable-background:new 0 0 97.637 97.637;" xml:space="preserve">
+                    <a class="twitter" target="_blank" href="<?= the_field('twitter_url', 'option'); ?>" title="Twitter Link">
+                            <svg class="mr-lg-4 mr-md-4 mr-1" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="97.637px" height="97.637px" viewBox="0 0 97.637 97.637" style="enable-background:new 0 0 97.637 97.637;" xml:space="preserve">
                                 <g>
                                     <path d="M97.523,18.526c-0.14-0.165-0.371-0.221-0.568-0.131c-2.919,1.295-5.99,2.226-9.153,2.776
                                             c3.358-2.526,5.86-6.024,7.143-10.035c0.062-0.192-0.002-0.402-0.159-0.527c-0.158-0.125-0.377-0.141-0.55-0.038
@@ -46,8 +51,8 @@
                                 </g>
                             </svg>
                         </a>
-                        <a class="facebook" href="<?= the_field('facebook_url', 'option'); ?>" title="Facebook Link">
-                            <svg  class="mr-lg-5 mr-md-5 mr-2" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="96.124px" height="96.123px" viewBox="0 0 96.124 96.123" style="enable-background:new 0 0 96.124 96.123;" xml:space="preserve">
+                        <a class="facebook"target="_blank"  href="<?= the_field('facebook_url', 'option'); ?>" title="Facebook Link">
+                            <svg  class="mr-lg-4 mr-md-4 mr-1" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="96.124px" height="96.123px" viewBox="0 0 96.124 96.123" style="enable-background:new 0 0 96.124 96.123;" xml:space="preserve">
                                 <g>
                                     <path d="M72.089,0.02L59.624,0C45.62,0,36.57,9.285,36.57,23.656v10.907H24.037c-1.083,0-1.96,0.878-1.96,1.961v15.803
                                             c0,1.083,0.878,1.96,1.96,1.96h12.533v39.876c0,1.083,0.877,1.96,1.96,1.96h16.352c1.083,0,1.96-0.878,1.96-1.96V54.287h14.654
@@ -56,8 +61,8 @@
                                 </g>
                             </svg>
                         </a>
-                        <a class="youtube" href="<?= the_field('youtube_url', 'option'); ?>" title="Twitter Link">
-                            <svg class="mr-lg-5 mr-md-5 mr-2" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="96.875px" height="96.875px" viewBox="0 0 96.875 96.875" style="enable-background:new 0 0 96.875 96.875;" xml:space="preserve">
+                        <a class="youtube" target="_blank" href="<?= the_field('youtube_url', 'option'); ?>" title="Youtube Link">
+                            <svg class="mr-lg-4 mr-md-4 mr-1" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="96.875px" height="96.875px" viewBox="0 0 96.875 96.875" style="enable-background:new 0 0 96.875 96.875;" xml:space="preserve">
                                 <g>
                                     <path d="M95.201,25.538c-1.186-5.152-5.4-8.953-10.473-9.52c-12.013-1.341-24.172-1.348-36.275-1.341
                                             c-12.105-0.007-24.266,0-36.279,1.341c-5.07,0.567-9.281,4.368-10.467,9.52C0.019,32.875,0,40.884,0,48.438
@@ -68,8 +73,15 @@
                                 </g>
                             </svg>
                         </a>
+                        <a class="instagram" target="_blank" href="<?= the_field('instagram_url', 'option'); ?>" title="Instagram Link">
+                        <svg class="mr-lg-4 mr-md-4 mr-1" width="96.875px" height="96.875px" viewBox="0 0 511 511.9" xmlns="http://www.w3.org/2000/svg"><path d="m510.949219 150.5c-1.199219-27.199219-5.597657-45.898438-11.898438-62.101562-6.5-17.199219-16.5-32.597657-29.601562-45.398438-12.800781-13-28.300781-23.101562-45.300781-29.5-16.296876-6.300781-34.898438-10.699219-62.097657-11.898438-27.402343-1.300781-36.101562-1.601562-105.601562-1.601562s-78.199219.300781-105.5 1.5c-27.199219 1.199219-45.898438 5.601562-62.097657 11.898438-17.203124 6.5-32.601562 16.5-45.402343 29.601562-13 12.800781-23.097657 28.300781-29.5 45.300781-6.300781 16.300781-10.699219 34.898438-11.898438 62.097657-1.300781 27.402343-1.601562 36.101562-1.601562 105.601562s.300781 78.199219 1.5 105.5c1.199219 27.199219 5.601562 45.898438 11.902343 62.101562 6.5 17.199219 16.597657 32.597657 29.597657 45.398438 12.800781 13 28.300781 23.101562 45.300781 29.5 16.300781 6.300781 34.898438 10.699219 62.101562 11.898438 27.296876 1.203124 36 1.5 105.5 1.5s78.199219-.296876 105.5-1.5c27.199219-1.199219 45.898438-5.597657 62.097657-11.898438 34.402343-13.300781 61.601562-40.5 74.902343-74.898438 6.296876-16.300781 10.699219-34.902343 11.898438-62.101562 1.199219-27.300781 1.5-36 1.5-105.5s-.101562-78.199219-1.300781-105.5zm-46.097657 209c-1.101562 25-5.300781 38.5-8.800781 47.5-8.601562 22.300781-26.300781 40-48.601562 48.601562-9 3.5-22.597657 7.699219-47.5 8.796876-27 1.203124-35.097657 1.5-103.398438 1.5s-76.5-.296876-103.402343-1.5c-25-1.097657-38.5-5.296876-47.5-8.796876-11.097657-4.101562-21.199219-10.601562-29.398438-19.101562-8.5-8.300781-15-18.300781-19.101562-29.398438-3.5-9-7.699219-22.601562-8.796876-47.5-1.203124-27-1.5-35.101562-1.5-103.402343s.296876-76.5 1.5-103.398438c1.097657-25 5.296876-38.5 8.796876-47.5 4.101562-11.101562 10.601562-21.199219 19.203124-29.402343 8.296876-8.5 18.296876-15 29.398438-19.097657 9-3.5 22.601562-7.699219 47.5-8.800781 27-1.199219 35.101562-1.5 103.398438-1.5 68.402343 0 76.5.300781 103.402343 1.5 25 1.101562 38.5 5.300781 47.5 8.800781 11.097657 4.097657 21.199219 10.597657 29.398438 19.097657 8.5 8.300781 15 18.300781 19.101562 29.402343 3.5 9 7.699219 22.597657 8.800781 47.5 1.199219 27 1.5 35.097657 1.5 103.398438s-.300781 76.300781-1.5 103.300781zm0 0"/><path d="m256.449219 124.5c-72.597657 0-131.5 58.898438-131.5 131.5s58.902343 131.5 131.5 131.5c72.601562 0 131.5-58.898438 131.5-131.5s-58.898438-131.5-131.5-131.5zm0 216.800781c-47.097657 0-85.300781-38.199219-85.300781-85.300781s38.203124-85.300781 85.300781-85.300781c47.101562 0 85.300781 38.199219 85.300781 85.300781s-38.199219 85.300781-85.300781 85.300781zm0 0"/><path d="m423.851562 119.300781c0 16.953125-13.746093 30.699219-30.703124 30.699219-16.953126 0-30.699219-13.746094-30.699219-30.699219 0-16.957031 13.746093-30.699219 30.699219-30.699219 16.957031 0 30.703124 13.742188 30.703124 30.699219zm0 0"/></svg>
+                        </a>
                     </ul>
                 </div>
+                
+            <a class="logo" href="<?php echo home_url(''); ?>">
+                <img width="135px" src="<?= the_field('logo', 'option'); ?>" alt="SDPI Logo"/>
+            </a>
 
         <ul class="navbar-nav navbar-right d-flex flex-row align-items-center">
             <li class="mr-3 search-opener">
@@ -103,9 +115,14 @@
 
 			</nav>
 			<div class="search-bar d-flex align-items-center justify-content-center">
-				<div class="search-bar-wrapper">
-					<input type="text" class="search-input" placeholder="Search eg. News, Events, SDTV">
-				</div>
+                    <form role="search" method="get" id="searchform" action="<?php echo home_url( '/' ); ?>">
+                        <div class="search-bar-wrapper">    
+                           
+                                <input type="text" name="s" id="s" class="search-input" placeholder="Search eg. News, Events, SDTV">
+                                <input type="submit" id="searchsubmit" value="" />
+                          
+                        </div>
+                    </form>
 			</div>
 		</header>
 

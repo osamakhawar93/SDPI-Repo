@@ -8,6 +8,15 @@
     .sdpi-container-f {
         padding: 0 15px;
     }
+	.timeline .event p{
+		font-size:15px;
+        line-height:18px;
+        margin-bottom: 10px;
+    }
+    ul.procurements a{
+        font-size:15px;
+        line-height:23px;
+    }
     .header-social ul.navbar-nav{
         flex-direction: row;
     }
@@ -15,10 +24,31 @@
         padding:0 15px;
     }
     .video-box{
-        min-height: auto;
+        height: 250px;
+        margin-bottom: 15px;
+    }
+    .video-box .play-button{
+        width:80px;
+        height:80px;
+    }
+    .video-box .play-button .right-arrow{
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+        border-left: 25px solid #fff;
+        left:45%;
     }
     .publications-slider{
         padding:0;
+    }
+    ul.filters-list{
+        flex-direction: column;
+    }
+    ul.filters-list li select, ul.filters-list li input[type="text"]{
+        max-width:100%;
+    }
+    ul.filters-list li{
+        width:100%;
+        margin-bottom:15px;
     }
     .news-slide{
         margin:0;
@@ -32,16 +62,14 @@
         display: none !important;
     }
     .sdpi-dropdown{
-        padding:30px 15px;
+        padding:30px 15px 30px 30px;
     }
     ul#primary-menu li{
-        margin-bottom: 15px;
+        margin-bottom: 10px;
     }
     ul#primary-menu li a{
-        font-size: 14px;
-    }
-    header.header.search-opnened .search-bar {
-        min-height: 100px;
+        font-size: 15px;
+		line-height: 22px;
     }
     .site-footer .copyrights{
         margin-top:0;
@@ -56,12 +84,359 @@
     .site-footer .copyrights p br{
         display: none;
     }
+    .training-date img {
+        display: none;
+    }
+    .shortcode .row .row{
+        margin:15px;
+    }
+    .single-date{
+        margin-bottom: 15px;
+    }
+    .downloads{
+        display: block;
+    }
+    .downloads .download-icn{
+        margin-bottom: 15px;
+    }
+    .advocacy-pills li{
+        width:33.3333%;
+        text-align: center;
+    }
+    .advocacy-pills.two-pills li{
+        width: 100%;
+    }
+    .advocacy-pills li a.nav-link.active{
+        border-radius: 0;
+    }
+    .advocacy-pills li a{
+        font-size: 12px;
+    }
+    .banner-image{
+        height:200px;
+        min-height:200px;
+        background-size: cover;
+        background-attachment: scroll;
+    }
+    .mb-100{
+        margin-bottom: 30px;
+    }
+    .two-siders .two-sides-box:last-child{
+        margin-bottom: 0 !important;
+    }
+}
+@media (min-width:481px) and (max-width:767px){
+	.contact-form-section{
+		padding:30px 0 70px 0;
+    }
+    .navbar-nav .dropdown-menu{
+        max-height: 200px;
+        overflow: scroll;
+    }
+    .video-box{
+        height: 350px;
+        margin-bottom: 15px;
+    }
+    .icon-boxes img{
+        width:125px;
+        min-height:auto;
+    }
 
 }
-
-@media (min-width:768px) and (max-width:1024px){
+@media (max-width:767px){
+    body{
+         padding-top: 105px;
+    }
+    .sdpi-nav{
+        min-height: 50px;
+    }
+    .icon-boxes img{
+        min-height:auto;
+        width:125px;
+    }
+    .team-box img{
+        height: 220px;
+        width:100%
+    }
+    .team-socials a.team-social-icn{
+        min-width:40px;
+    }
+    .contact-form-section{
+        padding:30px 0 80px 0;
+    }
+	#related-posts{
+		padding-bottom:50px;
+    }
+    .entry-content p, .meta-info p, .meta-info p a,.unit-center a p{
+        font-size: 16px;
+        line-height: 24px;
+    }
+	.blog-row {
+		flex-direction:column;
+	}
+	.blog-row .image-block{
+		margin-bottom:15px;
+	}
+    .single-custom-template {
+        padding: 30px 0 80px 0;
+    }
+    .search-opener a img{
+        width: 20px;
+    }
+    .sdpi-nav ul.navbar-nav:not(#primary-menu){
+        min-width: 55px;
+        max-width: 100%;
+    }
+    ul#primary-menu{
+        min-width: 100%;
+    }
+    .navbar-opener{
+        width:20px;
+        height:20px;
+    }
+    .navbar-opener span{
+        width: 8px;
+        height: 8px;
+    }
+    .logo img{
+        width:75px
+    }
+    .custom-page-content-blocks .download-icn{
+        width:100%;
+    }
+    .search-bar-wrapper,.search-bar input.search-input,.sdpi-nav #searchform{
+        height: 35px;
+    }
+	.section-heading h2, .section-heading p, .section-heading h3, .search-heading{
+		padding:30px 0;
+		font-size:26px;
+	}
+	.blog-single-title{
+        font-size:26px;
+        line-height: 34px;
+	}
+    .search-bar-wrapper:after{
+        width: 20px;
+        height: 20px;
+        right: 15px;
+        top: 10px;
+    }
+    .site-footer ul li{
+        margin-bottom: 10px;
+    }
+    .site-footer ul li a,
+    .new-box p,
+    .news-slide-info p,
+    .two-sides-box p,
+    .calendar-wrapper table td{
+        font-size: 15px;
+        line-height:20px;
+    }
+	.tabs-list-strip{
+		min-height:60px
+    }
+    .meta-info,.downloads{
+        margin-top:15px;
+    }
+    header.header.search-opnened .search-bar,
+    .search-bar{
+        min-height: 55px;
+    }
+    .navbar-nav .dropdown-menu{
+        top:47px
+    }
+    .navbar-nav a svg{
+        width:15px
+    }
+    .title-header{
+        min-height: auto;
+        padding: 15px;
+        font-size: 26px;
+    }
+    .training-title h3,
+    .about-template-content h2{
+        font-size: 26px;
+        line-height: 34px;
+        margin-bottom: 15px;
+    }
+	.cvf-pagination-nav{
+		margin:50px 0;
+	}
+    .tabs-heading{
+        font-size: 26px;
+        padding: 30px 0 0;
+    }
+    .circular-filled-icons,.icon-content{
+        margin-bottom: 0;
+        font-size: 16px !important;
+        line-height: 20px;
+        padding-top: 10px;
+    }
+    .circular-filled-icons{
+        width:135px;
+        height: 135px;
+    }
+    .circular-filled-icons img{
+        width: 90px;
+    }
+    .two-siders .two-sides-box,
+    .two-siders .two-sides-box:last-child, #reactive_advocacy .single-advocacy{
+        padding: 15px;
+        height: auto;
+        min-height: auto;
+    }
+    .two-sides-box img{
+        width:100%
+    }
+    .two-siders .two-sides-box:nth-child(odd):after, 
+    .two-siders .two-sides-box:nth-child(even):after{
+        display: none;
+    }
+    .two-siders .two-sides-box:nth-child(2){
+        margin:0;
+    }
+    .mt50mb120{
+        margin: 15px 0 75px;
+    }
+    .link-on-yellow{
+        font-size: 12px;
+        line-height: 16px;
+    }
+    .site-footer ul{
+        margin-bottom: 30px;
+    }
+    .mb-150{
+        margin-bottom:30px;
+    }
+    .two-siders .two-sides-box:last-child{
+        margin-bottom: 65px;
+    }
+    div.banner{
+        height:200px;
+    }
+    .custom-page-content-blocks h2, .custom-page-content-blocks h3, .custom-page-content-blocks h4{
+        font-size:26px;
+    }
+    #videoModal .modal-content .close-modal{
+        right: -5px;
+        top: -25px;
+    }
+    .custom-page-content-blocks p,
+    .custom-page-content-blocks ul:not(.timeline) li,
+    .custom-page-content-blocks ol li{
+        margin-bottom:15px;
+        font-size:15px;
+        line-height: 22px;
+    }
+    .custom-page-content-blocks ul li, .custom-page-content-blocks ol li,
+    .icon-boxes p,.form-deadline, .form-body li,.about-template-content h4,.sidebar_menu li a{
+        font-size: 15px;
+        line-height: 20px;
+    }
+    .custom-page-content-blocks ol, .custom-page-content-blocks ul{
+        padding-left:15px;
+    }
+    .advocacy-pills.four-pills li{
+        width:100%
+    }
+    .advocacy-pills.four-pills li a.nav-link.active{
+        border-radius: 0;
+    }
+    .section-heading h2{
+        padding: 30px 0;
+    }
+    .downloads{
+        margin-top:60px;
+    }
+    #timeline-content {
+        margin-left: 15px !important
+    }
+    .icon-boxes h3{
+        font-size: 28px;
+        margin-bottom: 15px;
+    }
+    .timeline .event:before{
+        font-size: 12px !important;
+    }
+    .timeline .event{
+        margin-bottom:60px !important
+    }
+    .timeline .event:before{
+        display: none;
+    }
+    ul#primary-menu>li.menu-item-has-children>a:before{
+        left: -15px;
+        width: 10px;
+        height: 10px;
+        transform-origin: 2px 2px;
+    }
+    .banner-slider-bg,.banner-img{
+        min-height:200px;
+        height:200px;
+    }
+    .about-template-content h4{
+        margin-bottom: 15px;
+    }
+	.timeline h3 a,
+	.accordion-btns, .training-heading a{
+	    font-size: 16px;
+		line-height: 24px;
+		margin-bottom: 15px;
+    }
+    .new-box .action-icons{
+        right:20px;
+    }
+    .events-section{
+        height: auto;
+        padding:30px 0;
+    }
+    .events-list{
+/*         width:100%; */
+        margin:0 15px;
+    }
+    .events-slider .slick-slide img{
+        width:100%
+    }
+    .about-icon{
+        width:100px;
+    }
+    .accordion-btns:before{
+        height: 1px;
+        width: 20px;
+    }
+    .accordion-btns:after{
+        left: 9px;
+        height: 20px;
+    }
+    .form-body .download-icn, .download-icn{
+        margin-top:15px;
+    }
+    .custom-pagination li{
+        width:30px;
+        height:30px;
+    }
+    .custom-pagination img{
+        width:15px;
+    }
+    .mb-50{
+        margin-bottom: 30px;
+    }
+    section{
+        margin-bottom: 30px;
+    }
+}
+@media (min-width:768px) and (max-width:991px){
     .publications-slider,.news-slider {
         padding: 0 25px;
+    }
+    .download-icn{
+        font-size: 12px;
+    }
+    .downloads{
+        margin-top:60px;
+    }
+    .advocacy-pills li a{
+        font-size: 16px;
     }
     .publications-slider .slick-prev, .news-slider .slick-prev{
         left:-10px;
@@ -71,5 +446,78 @@
     }
     .publications-slider .slick-next, .news-slider .slick-next{
         right:-10px;
+    }
+    .training-date img{
+        display: none;
+    }
+    .shortcode .row .row{
+        margin:15px;
+    }
+    .sidebar_menu li a,
+    .training-heading a,
+    .training-date p{
+        font-size: 20px;
+        line-height: 100%;
+    }
+    .two-siders .two-sides-box:nth-child(odd):after, .two-siders .two-sides-box:nth-child(even):after{
+        width:60%;
+    }
+    .two-sides-box p{
+        font-size: 28px;
+        line-height: 36px;
+    }
+    .two-siders .two-sides-box:nth-child(even):after{
+        bottom: -150px;
+    }
+    .two-siders .two-sides-box:nth-child(2){
+        margin:0;
+    }
+    #reactive_advocacy .single-advocacy{
+        padding: 30px 15px;
+    }
+    #reactive_advocacy .single-advocacy:last-child{
+        padding-bottom: 100px;
+    }
+    .two-siders .two-sides-box:last-child, #reactive_advocacy .single-advocacy{
+        min-height: 500px;
+    }
+	.contact-form-section{
+		padding:30px 0 70px 0;
+    }
+    #timeline-content{
+        margin-left:0 !important;
+    }
+}
+
+@media (min-width:992px) and (max-width:1200px){
+    .two-siders .two-sides-box:nth-child(odd):after, 
+    .two-siders .two-sides-box:nth-child(even):after{
+        width: 725px;
+    }
+    .two-siders .two-sides-box:nth-child(even):after{
+        bottom:-190px
+    }
+}
+
+@media (max-width:1024px){
+    #searchform {
+        width: 90%;
+        margin: 0 auto;
+        height: 35px;
+    }
+    .search-bar-wrapper #searchsubmit{
+        right: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+@media (min-width:1025px){
+  
+}
+
+@media (max-width:769px){
+    .d-mobile{
+        display: block !important;
     }
 }

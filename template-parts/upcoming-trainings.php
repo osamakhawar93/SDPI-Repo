@@ -1,7 +1,8 @@
 <?php 
 
 $args = array(
-		'post_type'=> 'trainings',
+        'post_type'=> 'trainings',
+        'post_status'=>'publish',
 		'order'    => 'DESC'
 		);              
 
@@ -31,10 +32,34 @@ $args = array(
                                        echo $location[0];?>
                                     </li>
                                     <li>
-                                        <?php $link = get_post_meta( $post->ID, 'registration_form_link');
-                                      
-                                   ?>
-                                       <p class="download-icn"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-grey.svg'?>"/><a href="<?= $link[0]['url'] ?>">Download Registration Form</a></p>
+                                        <?php $registration_form = get_field( 'registration_form'); 
+                                        if( $registration_form ): ?>
+                                            <p class="download-icn mt-50"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-grey.svg'?>"/>
+                                            <a download="<?= $registration_form ?>" href="<?= $registration_form ?>">Download Registration Form</a>
+                                            </p>
+                                        <?php endif; ?>
+                                     
+                                      <?php
+
+                                        // check if the repeater field has rows of data
+                                        if( have_rows('brochures') ):
+
+                                            // loop through the rows of data
+                                            while ( have_rows('brochures') ) : the_row(); ?>
+
+                                                <p class="download-icn"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-grey.svg'?>"/><a download="<?= the_sub_field('brochure_file_') ?>" href="<?= the_sub_field('brochure_file_') ?>"><?= the_sub_field('brochure_name')?></a></p>
+                                               
+
+                                            <?php endwhile;
+
+                                        else :
+
+                                          
+
+                                        endif;
+
+                                        ?>
+
                                     </li>
                              </ul>
                         </div>
@@ -42,4 +67,5 @@ $args = array(
                     <?php
         endforeach;
             wp_reset_postdata();
+            wp_reset_query();
 	endif;
