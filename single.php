@@ -26,12 +26,27 @@ get_header();
 				</div>
 				<?php }
 			?>
+			 <?php 
+                if(get_field('file_link')){ ?>
+                <p class="download-icn mt-0">
+					<img width='20' src="<?= get_template_directory_uri().'/assets/images/icn-download-blue.svg'?>"/>
+					<a download="<?= get_field('file_link') ?>" href="<?= get_field('file_link') ?>">Download Complete Article</a>
+                </p>
+                <?php
+                }
+			?>
 			<div class="blog-single-title mb-4">
 					<?= the_title() ?>
 			</div>
 			<div class="blog-authors mt-2 mb-4">
 			<?php
+					$in_house_authors = get_field('in_house_author');
+					if($in_house_authors == 'no'){ ?>
+						By: <strong><?= get_field('author_name')?></strong>
+					<?php }else{
+
 					
+
 					$count = count(get_field('authors',$post->ID));
 					$counter = 0;
                     if(get_field('authors',$post->ID)): ?>
@@ -60,8 +75,8 @@ get_header();
 					   // no rows found
 					echo '</strong>';
 				   endif;
-					
-					
+
+				}
 					?>
               
             </div>
@@ -76,17 +91,23 @@ get_header();
 
 		//Blog approved or not
 		$approved = get_field('blog_approved');
+		$publised = get_field('blog_published');
+
+		if($publised == 'yes'){
+			echo '<div class="row">'; ?>
+			<p class="disclaimer mb-0">This article was originally publised <a target="_blank" href="<?= get_field('blog_publised_link') ?>">here</a></p>
+			<?php echo '</div>';
+		}
+
 		if($approved == 'yes'){
 			echo '<div class="row">
 			<p class="disclaimer">Approved By SDPI</p>
 			</div>';
 		}else{
 			echo '<div class="row">
-				<p class="disclaimer">This is the personal opinion of the author and does not reflect 
-				the ideology or thinking of SDPI</p>
+				<p class="disclaimer">The opinions expressed in this article are the author\'s own and do not necessarily reflect the viewpoint or stance of SDPI.</p>
 			</div>';
 		}
-
 		?>   
 
 	

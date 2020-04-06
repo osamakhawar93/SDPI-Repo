@@ -1,5 +1,45 @@
 jQuery(document).ready(function($){
 
+  if($('.homepage_slider').length>0){
+    $('.homepage_slider').slick({
+      arrows:true,
+      loop: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      dots: true,
+      prevArrow:"<div class='a-left control-c prev slick-prev'></div>",
+      nextArrow:"<div class='a-right control-c next slick-next'></div>",
+      responsive: [
+        {
+          breakpoint: 992,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            infinite: true,
+            dots: true
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+        // You can unslick at a given breakpoint now by adding:
+        // settings: "unslick"
+        // instead of a settings object
+      ]
+    });
+  }
+
   $(".other-websites").click(function(){
     $("#other-websites").modal("show");
   })
@@ -149,7 +189,10 @@ jQuery(document).ready(function($){
     e.stopPropagation();
   });
   
+  var src;
   $(".play-button").click(function(){
+      src = $(this).attr('data-src');
+      $("#video_in_modal").attr("src",src);
       $("#videoModal").modal("show");
   })
   

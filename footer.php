@@ -67,14 +67,22 @@
 					<?= the_field('copyrights_text', 'option'); ?>
 				</div>
 				<div class="col-md-2 col-6 order-2 order-md-2 order-sm-2 order-lg-2">
-					<h3>Overview</h3>
+					<h3>Learn More</h3>
 					<?php
                         wp_nav_menu( array(
-                            'theme_location' => 'overview-menu',
+                            'theme_location' => 'learn-more-menu-footer',
                             'menu_class' => 'navbar-nav mt-2 mt-lg-0',
-                            'menu_id'        => 'overview-menu'
+                            'menu_id'        => 'learn-more-menu-footer'
                         ) );
-					?>
+                    ?>
+					<h3>Legal</h3>
+					<?php
+                        wp_nav_menu( array(
+                            'theme_location' => 'legal-menu-footer',
+                            'menu_class' => 'navbar-nav mt-2 mt-lg-0',
+                            'menu_id'        => 'legal-menu-footer'
+                        ) );
+                    ?>
 				</div>
 				<div class="col-md-2 col-6 order-md-3 order-sm-3 order-lg-3">
 					<h3>About Us</h3>
@@ -97,22 +105,14 @@
 					</ul>
 				</div>
 				<div class="col-md-2 col-6 order-md-4 order-sm-4 order-lg-4">
-					<h3>Learn More</h3>
+					<h3>Overview</h3>
 					<?php
                         wp_nav_menu( array(
-                            'theme_location' => 'learn-more-menu-footer',
+                            'theme_location' => 'overview-menu',
                             'menu_class' => 'navbar-nav mt-2 mt-lg-0',
-                            'menu_id'        => 'learn-more-menu-footer'
+                            'menu_id'        => 'overview-menu'
                         ) );
-                    ?>
-					<h3>Legal</h3>
-					<?php
-                        wp_nav_menu( array(
-                            'theme_location' => 'legal-menu-footer',
-                            'menu_class' => 'navbar-nav mt-2 mt-lg-0',
-                            'menu_id'        => 'legal-menu-footer'
-                        ) );
-                    ?>
+					?>
 				</div>
 				<div class="col-md-4 col-12 order-md-5 order-sm-5 order-lg-5">
 					<h3>Connect</h3>

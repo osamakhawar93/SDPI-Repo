@@ -13,8 +13,6 @@
             if($post_type == "events"){
                 if(has_post_thumbnail()){
                     echo get_the_post_thumbnail($post->ID ,'thumbnail' );
-                }else{
-                    echo  '<div class="img-class"></div>';
                 }
             }
                

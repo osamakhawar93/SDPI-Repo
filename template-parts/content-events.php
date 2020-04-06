@@ -12,7 +12,11 @@
         'alt' => $title,
         'title' => $title)); ?>
         <div class="event-detail">
-            <h5><?=  $start_date->format('M j').' - '.$end_date->format('M j') ?></h5>
+            <?php if($start_date->format('M j') !== $end_date->format('M j')): ?>
+                <h5><?=  $start_date->format('M j').' - '.$end_date->format('M j') ?></h5>
+            <?php else:?>
+                <h5><?=  $start_date->format('M j') ?></h5>
+            <?php endif; ?>
             <p><?= $title ?></p>
             <a href="<?= get_the_permalink() ?>" class="event-details-a">
                 Details

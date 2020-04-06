@@ -322,10 +322,9 @@ endif;
 				<li>
 					
 						<?php 
-						$post_id = url_to_postid(get_sub_field('related_news_links'));
-
+						$post_id = url_to_postid(get_sub_field('related_news_link'));
 						?>
-						<a href="<?= the_sub_field('related_news_links') ?>">
+						<a href="<?= the_sub_field('related_news_link') ?>">
 							<?= get_the_title($post_id) ?> 
 						</a>
 					
@@ -552,7 +551,7 @@ endif;
 			
 			<!-- Modal body -->
 			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-			<img src="" class="imagepreview" style="max-width:100%;">
+			<img src="" class="imagepreview" style="width:100%;height:auto">
 		
 			
 		</div>

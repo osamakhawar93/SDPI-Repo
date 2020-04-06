@@ -19,14 +19,23 @@ $published_date = DateTime::createFromFormat('Ymd', $published_date[0]);
 				<?php } ?>
             
                 <div class="d-sm-flex align-items-center justify-content-between">
+                <?php 
+                if(get_field('author')){ ?>
                 <p class="download-icn mt-0">
                 <img width='20' src="<?= get_template_directory_uri().'/assets/images/icn-user.svg'?>"/>
                     <?= get_field('author'); ?>
                 </p>
+                <?php
+                }
+                ?>
+
+                <?php 
+                if(get_field('newspaper_name')){ ?>
                 <p class="download-icn mt-0">
-                <img width='20' src="<?= get_template_directory_uri().'/assets/images/icn-newspaper.svg'?>"/>
+                    <img width='20' src="<?= get_template_directory_uri().'/assets/images/icn-newspaper.svg'?>"/>
                     <?= get_field('newspaper_name'); ?>
                 </p>
+                <?php } ?>
                 <p class="download-icn mt-0">
                 <img width='20' src="<?= get_template_directory_uri().'/assets/images/icn-newspaper.svg'?>"/>
                     Published Date: <?= $published_date->format('M j, Y') ?>

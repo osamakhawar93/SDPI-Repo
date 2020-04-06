@@ -1,73 +1,86 @@
-<?php /* Template Name: Units */ ?>
-<?php 
-get_header();
+<?php
+/**
+* Template Name: Units
+* Description: The template for displaying all  posts and attachments
+*/
+
+$unit_id = $_GET['unit_id'];
+
 ?>
+    <?php get_header(); ?>
+        <section class="title-header d-flex align-items-center justify-content-center mb-0">
+            <h2><?= get_the_title($unit_id)?></h2>
+        </section>
+        <section class="banner-image mb-0" style="background-image:url('<?= get_field('page_banner') ?>')">
 
+        </section>
 
-<section class="title-header d-flex align-items-center justify-content-center mb-0">
-    <h2><?= get_field('page_title') ?></h2>
-</section>
-
-
-<section class="banner-section-abt">
-    <div class="banner-img mb-50" style="background-image:url('<?= get_field('page_banner') ?>')">
-     
-    </div>
-</section>
-
-<div class="container">
-
-    <div class="row mt-md-5">
-
-            <?php
-
-        // check if the repeater field has rows of data
-        if( have_rows('units') ):
-
-            // loop through the rows of data
-            while ( have_rows('units') ) : the_row(); 
-                if(get_sub_field('unit_name')):
-            ?>
-
-        
-            <div class="col-md-6 col-6 text-center unit-center mb-5">
-                <a href="<?= the_sub_field('unit_link');  ?>">
+        <section class="pt-5">
+            <div class="container">
+                <div class="unit-detail">
                 <?php 
-                    if(the_sub_field('unit_image')){
-                        echo  '<img width="100%" src='.the_sub_field('unit_image').' />';
-                    }else{
-                    echo  '<img width="100%" src='.get_template_directory_uri().'/assets/images/team.png />';
-                    }
-                    
+                $unit_detail = get_post_meta( $unit_id, 'unit_detail');
+                echo  $unit_detail[0];
+                ?>
+                </div>
+                <h3 class="unit-headings text-left">Research Lead</h3>
+                <?php 
+            $leadTeamMember = get_post_meta( $unit_id, 'lead_team_member');
+            $leadTeamMember = $leadTeamMember[0];
+
+            $staff = get_post_meta($unit_id, 'staff');
+            $staff = $staff[0];
+            $designation = get_post_meta( $leadTeamMember, 'designation');
+            ?>
+                <?php if($leadTeamMember){ ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <a class="team-links" href="<?= get_the_permalink($leadTeamMember); ?>">
+                                                <p class="name">
+                                                    <?= get_the_title($leadTeamMember) ?>
+                                                </p>
+                        </a>
+                    </div>
+                </div>
+
+                                                                    <?php }else{ ?>
+<p class="text-left">No Team Lead Assigned</p>
+                                                                   <?php } ?>
+
+               
+            <h3 class="unit-headings mt-5 mb-5 text-left">Research Staff Members</h3>
+                <?php
+                
+                if ($staff) { ?>
+
+
+                <p><?php the_field('staff', $leadTeamMember); ?></p>
+                <div class="row">
+
+                    <?php 
+                    for ($i=0; $i<$staff;$i++) { 
+                      $meta_key = 'staff_'.$i.'_staff_posts';
+                      $sub_field_value = get_post_meta($unit_id, $meta_key, true);
+                      $designation2 = get_post_meta( $sub_field_value, 'designation');
+                      ?>
+
+                    <div class="col-md-12  mb-3">
+                    <a class="team-links" href="<?= get_the_permalink($sub_field_value); ?>">
+                        <p class="name">
+                            <?= get_the_title($sub_field_value) ?> (<?= $designation2[0] ?>)
+                        </p>
+                    </a>
+                    </div>
+
+                    <?php }
+                  }else{ ?>
+    <p class="text-left">No Team Members assigned</p>
+                  <?php }
                     ?>
-                    <?= the_sub_field('unit_name'); ?>
-                </a>
-            </div> 
-
-            <?php
-                endif;
-            endwhile;
-
-        else :
-
-            // no rows found
-
-        endif;
-
-        ?>
-
-        <div class="col-md-12 col-lg-12 col-xl-12 about-template-content">
-            <?= get_field('main_heading') ?>
-            <h4><?= get_field('sub_heading') ?></h4>
-           
-            <div class="shortcode">
-                <?=  get_field("about_shortcode") ?>
+                    
+                </div>
             </div>
-        </div>
-    </div>
-</div>
+        </section>
+        <?php
 
-
-<?php 
-get_footer();
-?>
+ get_footer(); ?>

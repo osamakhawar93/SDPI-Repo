@@ -6,13 +6,33 @@ get_header();
 <div class="sdpi-container-f">
     <h3 class="section-heading"><?= get_field('new_heading') ?></h3>
     <div class="row">
-        <div class="col-sm-7 col-md-7 col-lg-8">
-            <div class="video-box" style="background-image:url('<?= get_field('new_section_video_placeholder') ?>')">
-                <div class="play-button">
+    <div class="col-sm-7 col-md-7 col-lg-8">
+
+        <?php
+        // check if the repeater field has rows of data
+        if( have_rows('homepage_slider') ): ?>
+
+        <div class="homepage_slider"> 
+            <?php while ( have_rows('homepage_slider') ) : the_row(); ?>
+            <div class="video-box" style="background-image:url('<?= get_sub_field('slider_image') ?>')">
+                <?php if(get_sub_field('isvideo') == 'yes'): ?>
+                <div class="play-button" data-src="<?= get_sub_field('video_url') ?>">
                         <div class="right-arrow"></div>
                 </div>
+                <?php endif; ?>
             </div>
+
+            <?php endwhile;
+
+        else :
+
+            // no rows found
+
+        endif;
+
+        ?>
         </div>
+    </div>
         <div class="col-sm-5 col-md-5 col-lg-4">
             <div class="publications-small">
                     <?php
@@ -59,7 +79,7 @@ get_header();
 		</div>
 
         <p class="text-center mt-5">
-        <a class="viewall_whitebg" href="<?= get_field('events_link')['url'] ?>">View all Events</a>
+        <a class="viewall_whitebg" href="<?= home_url('/').get_field('events_link') ?>">View all Events</a>
         </p>
 	</div>
    
@@ -74,7 +94,7 @@ get_header();
                 ?>
             </div>
             <p class="text-center mt-5">
-            <a class="viewall_yellowbg " href="<?= get_field('publications_link')['url']  ?>">View all Publications</a>
+            <a class="viewall_yellowbg " href="<?= home_url('/'),get_field('publications_link')  ?>">View all Publications</a>
              </p>
 
 
@@ -90,7 +110,7 @@ get_header();
             </div>
 
             <p class="text-center mt-5">
-            <a class="viewall_whitebg" href="<?= get_field('latest_news_link')['url']  ?>">View all News</a>
+            <a class="viewall_whitebg" href="<?= home_url('/').get_field('latest_news_link')  ?>">View all News</a>
             </p>
     </div>
 </section>
@@ -105,7 +125,7 @@ get_header();
 				<div class="close-modal"> <button type="button" class="close" data-dismiss="modal">×</button> </div>
 				<!-- Modal body -->
 				<div class="modal-body">
-				<iframe class="embed-responsive-item" width="100%" height="500px" src="<?= get_field('video_url') ?>" id="video" allowscriptaccess="always"></iframe>
+				<iframe class="embed-responsive-item" width="100%" height="500px" src="" id="video_in_modal" allowscriptaccess="always"></iframe>
 				</div>
 
 

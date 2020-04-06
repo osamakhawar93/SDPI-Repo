@@ -1,4 +1,5 @@
 <?php
+ini_set('max_input_vars', 5000);
 /**
  * sdpi functions and definitions
  *
@@ -487,7 +488,7 @@ add_shortcode('training_calendar', 'training_calendar_function');
 	$args = array(
 			'posts_per_page' => -1,
 			'post_type' => 'team',
-			'orderby'=>'title',
+			'orderby'=>'menu_order',
 			'order'=>'ASC',
 			'tax_query' => array(
 					array(
@@ -639,27 +640,33 @@ add_action( 'wp_ajax_fetchEventsForSelectedMonth', 'fetchEventsForSelectedMonth'
 function fetchEventsForSelectedMonth($atts){
 	
 	if($_SERVER['REQUEST_METHOD'] == 'POST' ){
-	    $selected_date = $_POST['date']; 
-	    $selected_year =  date("Y");
+		$selected_date = $_POST['date']; 
+		$selected_year =  date("Y");
+
+		if($selected_date<=9){
+	        $selected_date = sprintf("%02s", $selected_date); // Adding 1 because months in js start from 0, also adding a trailing 0  
+	    }else{
+	        $selected_date = $selected_date;
+	    }
+		
 	    if($_POST['month']<=9){
 	        $_POST['month'] += 1;
 	        $selected_month = sprintf("%02s", $_POST['month']); // Adding 1 because months in js start from 0, also adding a trailing 0  
 	    }else{
 	        $selected_month = $_POST['month']+1;
 	    }
-	    
 	    $todays_date =  current_time($selected_year.$selected_month.$selected_date);// Todays Date is now the date you want events for 
 	}else{
-	   	$todays_date = current_time('Ymd'); // Todays Date is the date for today
+	   	$todays_date = date('YMd'); // Todays Date is the date for today
 	}
-
    
 
 	$args = array(
-			'posts_per_page' => -1,
+			'posts_per_page' => 15,
 			'post_type' => 'events',
-			'meta_key' => 'end_date',
-			'orderby' => 'meta_value',
+			'post_status' => 'publish',
+			'meta_key' => 'start_date',
+			'orderby' => 'meta_value_num',
 			'order' => 'ASC',
 			'meta_query' => array(
 				array(
@@ -687,7 +694,8 @@ function fetchEventsForSelectedMonth($atts){
 	echo '<script>
 	jQuery(".events-slider").slick({
 		slidesToShow: 3,
-		slidesToScroll: 1,
+		loop:true,
+		slidesToScroll: 3,
 		dots: true,
 		autoplay:false,
 		responsive:[
@@ -1040,6 +1048,8 @@ function getUpcomingProcurements_function(){
 		'post_status'=> 'publish',
 		'paged' => $paged,
 		'posts_per_page'=>20,
+		'order'=>'ASC',
+		'orderby'=>'menu_order',
 		'meta_query' => array(
 			array(
 				'key' => 'deadline_date',
@@ -1170,7 +1180,7 @@ function sdpi_fetchNewArrivals($atts){
 	$args = array(
 			'post_type' => array( 'news', 'publications', 'events','careers','projects','post'),
 			'posts_per_page' => 20,
-			'orderby' => 'publish_date',
+			'orderby' => 'modified',
 			'order' => 'Desc',
 			'post_status'=> 'publish'
 	);
@@ -1205,8 +1215,16 @@ function sdpi_fetchNewArrivals($atts){
  */
 
 function sdpi_fetchTeamCategories($atts){
+	$att = shortcode_atts( array(
+        'terms' => 5,
+	), $atts );
 
-	$terms = get_terms( 'team_category' );
+	$terms = get_terms( array(
+		'taxonomy' => 'team_category',
+		'include' => $att['terms'],
+		'hide_empty'  => false, 
+		)
+	);
 	$count = count( $terms );
 	if ( $count > 0 ) {
 		echo '<div class="row mt-md-5">';
@@ -1335,6 +1353,7 @@ $end_date = date('Ymd', strtotime(date($next_year.'-12-31')));
 
 
 		$args = array(
+			'suppress_filters' => true,
 			'post_type'=> 'publications',
 			'post_status'=>'publish',
 			'paged' => $paged,
@@ -1354,6 +1373,7 @@ $end_date = date('Ymd', strtotime(date($next_year.'-12-31')));
 		
 		if($_POST['search_query'] != ''){
 			$args = array(
+				'suppress_filters' => true,
 				'post_type'=> 'publications',
 				'post_status'=>'publish',
 				's' => $_POST['search_query'],
@@ -1530,6 +1550,7 @@ add_action('wp_ajax_nopriv_blogs_ajax_function', 'blogs_ajax_function_call');
 
 
 		$args = array(
+			'suppress_filters' => true,
 			'post_type'=> 'post',
 			'post_status'=>'publish',
 			'paged' => $paged,
@@ -1545,6 +1566,7 @@ add_action('wp_ajax_nopriv_blogs_ajax_function', 'blogs_ajax_function_call');
 
 		if($_POST['search_query'] != ''){
 			$args = array(
+				'suppress_filters' => true,
 				'post_type'=> 'post',
 				'post_status'=>'publish',
 				's' => $_POST['search_query'],
@@ -1733,6 +1755,7 @@ add_action('wp_ajax_nopriv_projects_ajax_function', 'projects_ajax_function_call
 
 
 		$args = array(
+			'suppress_filters' => true,
 			'post_type'=> 'projects',
 			'post_status'=>'publish',
 			'paged' => $paged,
@@ -1748,6 +1771,7 @@ add_action('wp_ajax_nopriv_projects_ajax_function', 'projects_ajax_function_call
 
 		if($_POST['search_query'] != ''){
 			$args = array(
+				'suppress_filters' => true,
 				'post_type'=> 'projects',
 				'post_status'=>'publish',
 				's' => $_POST['search_query'],
@@ -1938,6 +1962,7 @@ add_action('wp_ajax_nopriv_news_ajax_function', 'news_ajax_function_call');
  
 
 		$args = array(
+			'suppress_filters' => true,
 			'post_type'=> 'news',
 			'post_status'=>'publish',
 			'paged' => $paged,
@@ -1961,9 +1986,26 @@ add_action('wp_ajax_nopriv_news_ajax_function', 'news_ajax_function_call');
 				),
 			),
 		);
+		if($_POST['ToDate'] == '' && $_POST['FromDate'] == ''){
+			$args = array(
+				'suppress_filters' => true,
+				'post_type'=> 'news',
+				'post_status'=>'publish',
+				'paged' => $paged,
+				'posts_per_page' => $per_page,
+				'offset'=> $start,
+				'meta_key' => 'published_date',
+				'orderby' => 'meta_value_num',
+				'order' => 'DESC',
+				'meta_query' => array(
+					$year_array
+				),
+			);
+		}
 	 	
 		if($_POST['search_query'] != ''){
 			$args = array(
+				'suppress_filters' => true,
 				'post_type'=> 'news',
 				'post_status'=>'publish',
 				's' => $_POST['search_query'],
@@ -2054,3 +2096,81 @@ add_action('wp_ajax_nopriv_news_ajax_function', 'news_ajax_function_call');
 	}	
 	die();
 }
+
+
+
+
+ /**
+ *Adding Units custom posttype
+ */
+
+function cw_post_type_units() {
+	$supports = array(
+		'title',
+	);
+	$labels = array(
+			'name' => _x('Units', 'plural'),
+			'singular_name' => _x('Unit', 'singular'),
+			'menu_name' => _x('Units', 'admin menu'),
+			'name_admin_bar' => _x('Units', 'admin bar'),
+			'add_new' => _x('Add New Unit', 'add new'),
+			'add_new_item' => __('Add New Unit'),
+			'new_item' => __('New Unit'),
+			'edit_item' => __('Edit Unit'),
+			'view_item' => __('View Units'),
+			'all_items' => __('All Units'),
+			'search_items' => __('Search Units'),
+			'not_found' => __('No Units found.'),
+	);
+	$args = array(
+		'supports' => $supports,
+		'labels' => $labels,
+		'menu_icon'=>'dashicons-phone',
+		'public' => true,
+		'query_var' => true,
+		'rewrite' => array('slug' => 'units'),
+		'has_archive' => false,
+		'hierarchical' => false,
+	);
+	register_post_type('units', $args);
+}
+
+add_action('init', 'cw_post_type_units');
+
+
+
+ /**
+ * Shortcode To Fetch Units
+ */
+
+function sdpi_fetchUnits($atts){
+
+	$att = shortcode_atts( array(
+        'exclude' => 5,
+	), $atts );
+
+	$args = array(
+		'post_type'=> 'units',
+		'post_status'=>'publish',
+		'exclude'=> $att['exclude'],
+		'order' => 'ASC',
+		'posts_per_page' => -1,
+	);
+	$posts = get_posts($args);
+	//print_r($posts);
+	$count = count( $posts );
+	if ( $count > 0 ) {
+		echo '<div class="row mt-md-5">';
+		foreach ( $posts as $post ) {
+			echo '<div class="col-md-6 col-6 text-center unit-center mb-5">';
+				echo '<a href="'.home_url().'/unit-details?unit_id='.$post->ID.'">';
+                    echo  '<img width="100%" src='.get_template_directory_uri().'/assets/images/team.png />';
+                    echo '<p>'.$post->post_title.'</p>';
+				echo '</a>';
+			echo '</div>';
+		}
+		echo '</div>';
+	}
+
+ }
+ add_shortcode('getUnits','sdpi_fetchUnits');

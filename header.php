@@ -124,7 +124,12 @@
                         </div>
                     </form>
 			</div>
-		</header>
+        </header>
+        <?php 
 
+        if(get_field('enable_announcements', 'option') == 'yes'): ?>
+            <marquee class="announcements"><?= get_field('announcement', 'option') ?></marquee>
+        <?php endif; ?>
+ 
 
             <div id="content" class="site-content">

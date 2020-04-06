@@ -59,7 +59,8 @@ $id = get_the_ID();
 			</div>
 			<div class="blog-authors mt-2 mb-4">
 					<?php
-					$count = count(get_field('publication_author'));
+					$publication_author = get_field('publication_author');
+					$count = $publication_author;
 					$counter = 0;
                     if(get_field('publication_author')): ?>
 					By: <strong>

@@ -37,6 +37,12 @@ get_header();
         <li class="nav-item">
         <a class="nav-link" data-toggle="pill" data-target="#proactive_advocacy">Proactive Advocacy</a>
         </li>
+        <li>
+        <a class="nav-link" data-toggle="pill" data-target="#staff">Staff</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" target="_blank" href="<?= home_url('/').'all-events'; ?>">Events</a>
+        </li>
     </ul>
     </div>
 </section>
@@ -151,10 +157,9 @@ get_header();
     </div>
     <div id="proactive_advocacy" class="tab-pane fade"><br>
       <h2 class="tabs-heading" id="faculty">Proactive Advocacy</h2>
-          <h3 class="tabs-subheading"><?= get_field('team_heading') ?></h3>
-          <div class="sdpi-container-f mb-150">
-            <?= get_field('team_shortcode') ?>
-          </div>
+          <?php if(get_field('team_heading')){ ?>
+            <h3 class="tabs-subheading"><?= get_field('team_heading') ?></h3>
+          <?php } ?>
 
           <?php  $count = 0;
            $totalcount = count(get_field('two_side_columns_proactive'));
@@ -162,7 +167,7 @@ get_header();
             // check if the repeater field has rows of data
             if( have_rows('two_side_columns_proactive') ): 
                 // loop through the rows of data ?>
-          <div class="two-siders mb-5 mb-md-0"> 
+          <div class="two-siders mb-5 mb-md-0 mt-5"> 
             <?php while ( have_rows('two_side_columns_proactive') ) : the_row();?>
             
                 <div class="two-sides-box row"> 
@@ -191,6 +196,12 @@ get_header();
 
             endif;
         ?>
+    </div>
+    <div id="staff" class="tab-pane fade">
+    <h3 class="tabs-heading mb-5"><?= get_field('staff_heading') ?></h3>
+        <div class="sdpi-container-f">
+        <?= get_field('staff_shortcode'); ?>
+        </div>
     </div>
   </div>
 </section>

@@ -3,17 +3,25 @@
   $publication_author = get_post_meta( $post->ID, 'publication_author');
   $publication_file_link = get_post_meta( $post->ID, 'publication_file');
   $publication_file_link = wp_get_attachment_url($publication_file_link[0]);
+  $terms = wp_get_object_terms( $post->ID, 'publication_category', array( 'fields' => 'names' ) );
+  $class = ' ';
+  foreach ($terms as $term) {
+    if ($term  === "COVID-19 Policy Review Series") { // Yoshi version 
+        $class = "covid-class";
+    }
+  }
 
 ?>
 
 <div class="slide">
     <img src="<?= get_template_directory_uri().'/assets/images/publications-image.jpg'?>" />
-    <div class="publication-detail">
+    <div class="publication-detail <?php echo $class; ?>">
         <div class="action-btns d-inline-flex justify-content-between align-items-center">
-        <!--     <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-heart-white.svg' ?>"></a> -->
+       
         <a download="<?= $publication_file_link ?>" href="<?= $publication_file_link ?>"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-white.svg' ?>"></a>
         </div>
-        <h5><?= get_the_title() ?></h5>
+        
+        <h5>  <a href="<?= the_permalink($post->ID) ?>"> <?= get_the_title() ?>     </a> </h5>
         <p>
           <?php
 
@@ -45,7 +53,7 @@ if( have_rows('publication_author') ):
  endif;
 
 }          ?>
+
         </p>
     </div>
-    
 </div>

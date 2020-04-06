@@ -13,7 +13,7 @@
     </div> -->
     <div class="news-slide-info">
         <h6><?= get_the_date( 'dS M' );?></h6>
-        <p><?= wp_trim_words( get_the_content(), 25) ?></p>
+        <p><?= wp_trim_words( get_the_title(), 25) ?></p>
     </div>
  </a>
 </div>

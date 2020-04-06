@@ -68,6 +68,95 @@ get_header();
                          </div>
                      </section>
         <?php endif; ?>
+
+
+        <!--  Publications -->
+        <?php
+        if( have_rows('publications') ): ?>
+        <section class="custom-page-content-blocks mb-0 pb-3">
+                          <div class="container">
+                             <div class="row">
+                                 <div class="col-md-12">
+                                 <p  class="mb-3"><strong>Publications</strong></p>
+        <?php
+            echo '<ul>';
+            while ( have_rows('publications') ) : the_row(); ?>
+            <li>
+                <a href="<?= get_the_permalink(get_sub_field('publications_links')); ?>">
+                    <?= get_the_title(get_sub_field('publications_links')) ?>
+                </a>
+            </li>
+            <?php endwhile;
+            echo '</ul>';  ?>
+    
+                                    </div>
+                                </div>
+                            </div>
+        </section>
+        <?php
+            endif;
+        ?>
+        <!-- Publications -->
+
+
+
+        <!--  Events -->
+        <?php
+        if( have_rows('events') ): ?>
+        <section class="custom-page-content-blocks mb-0 pb-3">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                            <p  class="mb-3"><strong>Events</strong></p>
+        <?php
+            echo '<ul>';
+            while ( have_rows('events') ) : the_row(); ?>
+            <li>
+                <a href="<?= get_the_permalink(get_sub_field('events_links')); ?>">
+                    <?= get_the_title(get_sub_field('events_links')) ?>
+                </a>
+            </li>
+            <?php endwhile;
+            echo '</ul>';
+        ?>
+                            </div>
+                        </div>
+                    </div>
+        </section>
+        <?php
+            endif;
+        ?>
+        <!-- Events -->
+
+
+        <!--  Projects -->
+        <?php if( have_rows('projects') ): ?>
+        <section class="custom-page-content-blocks mb-5 pb-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                    <p class="mb-3"><strong>Projects</strong></p>
+        <?php
+       
+            echo '<ul>';
+            while ( have_rows('projects') ) : the_row(); ?>
+            <li>
+                <a href="<?= get_the_permalink(get_sub_field('projects_links')); ?>">
+                    <?= get_the_title(get_sub_field('projects_links')) ?>
+                </a>
+            </li>
+            <?php endwhile;
+            echo '</ul>';
+            // no rows found
+       ?>
+                            </div>
+                        </div>
+                    </div>
+        </section>
+    <?php
+    endif;
+    ?>
+        <!-- Projects -->
         
         
 		</main><!-- #main -->

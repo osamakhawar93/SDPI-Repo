@@ -17,7 +17,10 @@ get_header();
     
         <ul class="nav nav-pills advocacy-pills four-pills" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="pill" href="#partnership">Partnerships</a>
+                <a class="nav-link active" data-toggle="pill" href="#team">Team</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#partnership">Partnerships</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="pill" href="#specialisedtrainings">Specialised Trainings</a>
@@ -33,37 +36,10 @@ get_header();
 </section>
 <section class="tabs-content mb-0">
     <div class="tab-content">
-        <div id="partnership" class="tab-pane fade active show">
-        <section class="mandate mb-0 pb-md-5 pb-sm-5 pb-lg-5">
-        <div class="section-heading text-center">
-            <?= get_field('content_heading') ?>
-        </div>
-            <div class="container">
-                <div class="row mt-0 mt-sm-5 mb-5">
-                
-                    <?php
-                        // check if the repeater field has rows of data
-                        if( have_rows('icon-text-content') ):
-                            $count = 0;
-                            // loop through the rows of data
-                            while ( have_rows('icon-text-content') ) : the_row(); ?>
-                            <div class="col-md col-sm">
-                                <div class="icon-boxes text-center">
-                                    <img width="180" src="<?= get_sub_field('icon_image')?>"/>
-                                    <h3><?= get_sub_field('icon_text')?></h3>
-                                    <?= get_sub_field('icon_content')?>
-                                </div>
-                            </div>
-                            <?php
-                            endwhile;
-                        endif;
-                        ?>
-                    
-                </div>
-            </div>
-</section>
+        <div id="partnership" class="tab-pane">
+        
 
-<section class="side-by-side">
+<section class="side-by-side d-none">
 
 <?php      
         
@@ -116,15 +92,7 @@ get_header();
         ?>
 
         </section>
-        
-        <section class="team-section mb-0">
-            <div class="section-heading text-center">
-                <?= get_field('team_heading') ?>
-            </div>
-            <div class="container mb-50">
-                <?= get_field('team_shortcode') ?>
-            </div>
-        </section>
+
 
         <section class="partners-section mb-0 pb-5" id="partners-section">
             <div class="section-heading text-center">
@@ -156,6 +124,46 @@ get_header();
                 </div>
             </section>
         </div>
+
+        <div id="team" class="tab-pane fade active show">         
+        <section class="team-section mb-0">
+            <div class="section-heading text-center">
+                <?= get_field('team_heading') ?>
+            </div>
+            <div class="container">
+                <?= get_field('team_shortcode') ?>
+            </div>
+        </section>
+        <section class="mandate mb-0 pb-md-5 pb-sm-5 pb-lg-5">
+        <div class="section-heading heading-no-padding text-center">
+            <?= get_field('content_heading') ?>
+        </div>
+            <div class="container">
+                <div class="row mt-0 mt-sm-5 mb-5">
+                
+                    <?php
+                        // check if the repeater field has rows of data
+                        if( have_rows('icon-text-content') ):
+                            $count = 0;
+                            // loop through the rows of data
+                            while ( have_rows('icon-text-content') ) : the_row(); ?>
+                            <div class="col-md col-sm">
+                                <div class="icon-boxes text-center">
+                                    <img width="180" src="<?= get_sub_field('icon_image')?>"/>
+                                    <h3><?= get_sub_field('icon_text')?></h3>
+                                    <?= get_sub_field('icon_content')?>
+                                </div>
+                            </div>
+                            <?php
+                            endwhile;
+                        endif;
+                        ?>
+                    
+                </div>
+            </div>
+</section>
+        </div>
+
         <div id="inhousecapacitybuilding" class="tab-pane">
         <section class="partners-section custom-page-content-blocks mb-0 pb-5">
                 <div class="section-heading text-center">
