@@ -14,7 +14,7 @@ get_header();
 
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
-		<section class="custom-page-content-blocks mt-5">
+		<section class="custom-page-content-blocks mt-5 mb-0">
     		<div class="container">
 
 		<?php
@@ -47,49 +47,38 @@ get_header();
 			the_content(); ?>
 
 			<div class="blog-authors mt-2 mb-4">
-					<?php
-					
-					//$count = get_field('contact_persons',$post->ID);
-					$counter = 0;
-                    if(get_field('contact_persons',$post->ID)): ?>
-					<p class="mb-3"><strong>For More Information, Contact the Following Person:</strong></p>
-					<ul>
-						
-					<strong>
-					<?php
-					
-					
-					if( have_rows('contact_persons') ):
+				
+			<?php
+			$authors = $wpdb->get_results(
+				$wpdb->prepare( 
+					"
+						SELECT * 
+						FROM wp_postmeta
+						WHERE post_id  = %s
+						AND meta_key LIKE %s
+						AND meta_value <> %s
+					",
+					$post->ID,
+					'contact_persons_%_contact_person_link',
+					''
+				)
+			);
+			if(count($authors)>0){
+				echo '<p class="mb-3"><strong>For More Information, Contact the Following Person:</strong></p><br/>';
+			}
+			$count = 0;
+			foreach ($authors as $author){ ?>
+			<a href="<?= get_the_permalink($author->meta_value) ?>">
+				<?= get_the_title($author->meta_value) ?>
+			</a>
+			<?php
+			$count++;
+			if($count!= count($authors)){ ?>
+			<span>,</span>
+			<?php }
+			}
+			?>
 
-						// loop through the rows of data
-					   while ( have_rows('contact_persons') ) : the_row(); $counter++; ?>
-					   <?php 
-					   if(get_sub_field('contact_person_link')){ 
-						$post_id = url_to_postid(get_sub_field('contact_person_link'));
-						   ?>
-						<li>
-						<a href="<?php the_sub_field('contact_person_link') ?>">
-							<?= get_the_title($post_id) ?>
-						</a>
-						</li>
-					   <?php } ?>
-						<?php
-					   endwhile;
-				   
-				   else :
-				   
-					   // no rows found
-				   
-				   endif;
-					
-					
-					?>
-					</strong>
-					</ul>
-                    <?php else: ?>
-                        
-                    <?php endif;?> 
-              
             </div>
 	
 		<?php
@@ -352,10 +341,11 @@ endif;
 			  <li>
 				  
 					  <?php 
-					  $file = get_sub_field('related_files_links')[0];
+					  $file = get_sub_field('related_files_links');
+						//print_r($file);
 					  ?>
-					  <a href="<?= $file['related_files']['url'] ?>" download="<?= $file['related_files']['url'] ?>">
-						  <?= $file['related_files']['title'] ?> 
+					  <a href="<?= $file['url'] ?>" target="_blank">
+						  <?= $file['title'] ?> 
 					  </a>
 				  
 			  </li>
@@ -489,7 +479,7 @@ endif;
 
 
             
-<div class="warfare text-center mt-5">
+<div class="warfare text-center">
 	<?php  echo do_shortcode('[social_warfare buttons="facebook,twitter"]');?>         
 </div>
 
@@ -520,15 +510,6 @@ endif;
 							<h4 class="mt-3"><a  href="<?php the_permalink();?>">
 							<?= $post->post_title; ?>
 						</a></h4>
-						<div class="blog-authors mt-2">
-                    <?php
-                    if(get_field('authors')): ?>
-                    By: <strong><?= get_field('authors') ?></strong>
-                    <?php else: ?>
-                        By: <strong><?= ucfirst(get_the_author_meta('display_name', $author_id)); ?></strong>
-                    <?php endif;?> 
-              
-					</div>
 			
 						</div>
 						

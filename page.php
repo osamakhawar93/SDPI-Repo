@@ -45,6 +45,53 @@ get_header();
                                      </div>
                                  </div>
                              </div>
+                            <?php
+                             // check if the repeater field has rows of data
+                            if( have_rows('focal_persons') ): ?>
+                        <p><strong>Team:</strong></p>
+                             
+                        <div class="focal-persons">
+                        
+                            <?php
+
+echo '<div  class="row">';   
+                        while ( have_rows('focal_persons') ) : the_row(); 
+                                $post_id = get_sub_field('focal_persons_object');
+                                $args = array(
+                                    'p'         =>  $post_id, // ID of a page, post, or custom type
+                                    'post_type' => 'team'
+                                    );
+
+                                	$query = new WP_Query( $args );
+	$response = '';
+	if( $query->have_posts() ) :
+
+				
+				while( $query->have_posts() ): $query->the_post();
+				$response .= get_template_part('template-parts/content','team');
+				endwhile;
+			
+	
+		wp_reset_postdata(); wp_reset_query();
+	else :
+		echo 'No Team Members';
+	endif;
+                           
+endwhile;
+echo '</div>';
+?>
+                            
+                            
+                           
+                             </div>
+                             <?php
+                            else : 
+
+                                echo '<p><strong>No Team Members Assigned</strong></p>';
+
+                            endif;
+
+                            ?>
                          </div>
                      </section>
         

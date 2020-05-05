@@ -104,7 +104,7 @@ html,body{
 }
 /* Navbar */
 body{
-	padding-top: 228px;
+	padding-top: 148px;
 	margin: 0;
     position: relative;
 }
@@ -218,17 +218,36 @@ ul.filters-list{
 	align-items: center;
 	justify-content: stretch;
 }
-ul.filters-list li select,ul.filters-list li input[type="text"]{
+ul.filters-list li .filters-asc,ul.filters-list li input[type="text"]{
 	width: 100%;
-    border-radius: 50px;
-    height: 45px;
+    border-radius: 50px !important;
+    height: 45px !important;
     min-width: 160px;
     max-width: 220px;
     padding-left: 15px;
     border: 2px solid #29156e;
     color: #29156e;
     font-weight: 600;
-	background: #efc643;
+	background-color: #efc643;
+}
+.select2-container--default .select2-selection--single{
+	background-color: #efc643 !important;
+    border: 2px solid #29156e !important;
+    width: 100% !important;
+	height: 45px !important;
+	max-width: 100%;
+    border-radius: 50px !important;
+	font-weight: bold;
+	display: flex !important;
+	align-items: center;
+	position: relative;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow b{
+	border-color: #23282d transparent transparent transparent !important
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow{
+	height:45px !important
 }
 ul.filters-list li{
 	margin-left:5px;
@@ -392,7 +411,7 @@ a.instagram svg:hover{
 	border-radius: 50px;
 }
 .search-bar{
-	min-height: 150px;
+	min-height: 70px;
 	background: #FFCE00;
 	padding:0 40px;
 }
@@ -494,7 +513,7 @@ body.logged-in .header.fixed{
 .search-heading{
 	color:#29166E;
 	text-align: center;
-    padding: 60px 0;
+    padding: 30px 0;
 	font-size:40px;
 	font-family: 'Helvetica Neue LT Std 45 Light';
 }
@@ -647,6 +666,19 @@ body.logged-in .header.fixed{
 	position: relative;
 	cursor:pointer;
 }
+.archive .new-box{
+	box-shadow: 0px 10px 63px rgba(0, 0, 0, 0.12) !important
+}
+.archive .cust-nav{
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+.archive .cust-nav div a{
+	color: #29156e;
+    font-weight: bold;
+    font-size: 18px;
+}
 .new-box:hover{
 		box-shadow: 0px 22px 44px rgba(0, 0, 0, 0.12);
 }
@@ -724,7 +756,8 @@ body.logged-in .header.fixed{
 .events-section{
 	background: #FFCE00;
     min-height: 600px;
-    padding: 100px 0 80px 0;
+	/* padding: 100px 0 80px 0; */
+	padding: 15px 0 40px 0;
 }
 .publications-slider{
 	padding: 0 100px;
@@ -735,7 +768,7 @@ body.logged-in .header.fixed{
 	border-radius: 12px;
 	position: relative;
 	cursor: pointer;
-	margin:30px;
+	margin:0 30px 30px;
 	overflow: hidden;
 }
 .publications-slider .slide h5,
@@ -811,9 +844,16 @@ body.logged-in .header.fixed{
 	border-radius: 50%;
 	margin-right:20px;
 }
-.publications-slider .slick-dots li.slick-active,
-.events-slider .slick-dots li.slick-active{
+.publications-slider .slick-dots li.slick-active{
 	background-color: #EFC643 !important;
+}
+.events-slider .slick-dots li{
+	background-color: transparent !important;
+	border: 1px solid #29156e;
+}
+.events-slider .slick-dots li.slick-active{
+	background-color: #29156e !important;
+	border: 1px solid #EFC643;
 }
 .publications-slider .slick-dots li.slick-active button:before,
 .slick-prev:before, .slick-next:before,
@@ -841,7 +881,7 @@ body.logged-in .header.fixed{
 /* Latest news section */
 .latest-news{
 	background:#FFCE00;
-	padding:70px 0 120px 0;
+	padding:15px 0 120px 0;
 }
 .news-slider{
 	padding:0 50px
@@ -1677,7 +1717,7 @@ html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_share_
 }
 /* Policy Outreach */
 .title-header{
-	min-height:160px;
+	min-height:80px;
 	background: white;
 	color:#29166e;
 	font-size:34px;
@@ -1828,11 +1868,18 @@ html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_share_
 	margin:0 auto
 }
 .tabs-heading{
-	font-size: 40px;
+	/* font-size: 40px;
 	font-weight: 300;
 	text-align: center;
 	color:#302F85;
+ */
+ 	text-align: center;
+	font-size: 40px;
+	font-weight: 700;
+    line-height: 30px;
+	color: #6d6d6d;
 	padding:80px 0 0;
+
 }
 .tabs-subheading{
 	font-size: 30px;
@@ -1890,7 +1937,8 @@ html body .swp_social_panel.swp_flat_fresh.swp_individual_full_color .swp_share_
 	display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+	flex-direction: column;
+	margin-bottom: 0 !important;
 }
 .team-box:hover img{
 	transform: scale(1.1);
@@ -2006,7 +2054,7 @@ span.wpcf7-not-valid-tip{
 .blog-row:last-child{
 	border:none;
 }
-.custom-page-content-blocks .blog-single-title{
+.single .custom-page-content-blocks div.blog-single-title{
 	font-size:36px;
 	color:#29166E;
 	line-height:48px;
@@ -2130,21 +2178,21 @@ ul.procurements a{
 .custom-page-content-blocks h4{
 	color: #302f80;
     font-size: 38px;
-    margin-bottom: 30px !important;
+    margin-bottom: 15px !important;
     font-weight: 900;
 }
 .unit-headings{
-    background: white;
-    color: #29166e;
-    font-size: 34px;
-    text-align: center;
-	font-weight: 900;
 	margin-bottom: 50px;
+	font-size: 22px;
+    line-height: 30px;
+    color: #6d6d6d;
+	margin-bottom: 10px;
+	font-weight: 700;
 }
 .custom-page-content-blocks ol,
 .custom-page-content-blocks ul:not(.timeline){
     padding-left:30px;
-	margin-bottom:50px;
+	margin-bottom:20px;
 	list-style-type: disc;
 }
 .custom-page-content-blocks ul:not(.timeline) li,
@@ -2167,10 +2215,15 @@ ul.procurements a{
     color:#6d6d6d;
     margin-bottom:40px;
 }
-.custom-page-content-blocks div{
+.custom-page-content-blocks div:not([class*='col-']){
 	font-size:22px;
     line-height:30px;
-    color:#6d6d6d;
+	color:#6d6d6d;
+	margin-bottom:15px;
+}
+.custom-page-content-blocks div.row,
+.custom-page-content-blocks div.tab-content{
+	margin-bottom: 0;
 }
 p.disclaimer{
 	position: relative;
@@ -2386,6 +2439,9 @@ a.team-links{
     font-weight: bold !important; 
     font-size: 14px !important; 
 }
+.covid-class h5 a{
+	font-size: 18px !important; 
+}
 .sdc-series{
 	text-align: center;
 }
@@ -2417,7 +2473,8 @@ a.team-links{
 	top:0;
 	bottom: 0;
 	left:0;
-	height: calc(100% - 30px);
+	height: 100%;
+	/* height: calc(100% - 30px); */
 	width: 0;
 	transform: none;
 	z-index: 2;
@@ -2431,7 +2488,7 @@ a.team-links{
 	top:0;
 	bottom: 0;
 	right:0;
-	height: calc(100% - 30px);
+	height: 100%;
 	width: 0;
 	background: url(assets/images/right-arrow.svg) no-repeat 50% 50% #ffffff1f;
 	background-size: 30px;
@@ -2449,3 +2506,92 @@ a.team-links{
 	background-size: 30px;
 	width: 80px;
 }
+.publication-disclaimer{
+	font-size:16px;
+	line-height:24px;
+}
+
+.homepage_slider div,
+.publications-slider div
+{ transition: none; }
+
+
+/* Accordion Styles */
+/* Accordion styles */
+.tabs-custom {
+	overflow: hidden;
+  }
+  
+  .tabs-custom .tab {
+	width: 100%;
+	color: white;
+	overflow: hidden;
+  }
+  .tabs-custom .tab input{
+	  display: none;
+  }
+  .tabs-custom .tab-label {
+	display: -webkit-box;
+	display: flex;
+	-webkit-box-pack: justify;
+	justify-content: space-between;
+	padding: 1em;
+	background: #f5ce05;
+	font-weight: bold;
+	cursor: pointer;
+	color: #29156e;
+    font-weight: bold;
+	/* Icon */
+  }
+  .tabs-custom .tab-label:hover {
+	background: #29156e;
+	color: white;
+  }
+  .tabs-custom .tab-label:hover a{
+	color: white !important;
+  }
+  .tabs-custom .tab-label::after {
+	content: "\276F";
+	width: 1em;
+	height: 1em;
+	text-align: center;
+	-webkit-transition: all .35s;
+	transition: all .35s;
+  }
+  .tabs-custom .tab-content {
+	max-height: 0;
+	padding: 0 1em;
+	color: #2c3e50;
+	background: white;
+	overflow: hidden;
+	-webkit-transition: all .35s;
+	transition: all .35s;
+  }
+  .tabs-custom .tab-close {
+	display: -webkit-box;
+	display: flex;
+	-webkit-box-pack: end;
+			justify-content: flex-end;
+	padding: 1em;
+	font-size: 0.75em;
+	background: #2c3e50;
+	cursor: pointer;
+  }
+  .tabs-custom .tab-close:hover {
+	background: #29156e;
+  }
+  
+  .tabs-custom input:checked + .tab-label {
+	background: #29156e;
+    color: white;
+    font-weight: bold;
+  }
+  .tabs-custom input:checked + .tab-label::after {
+	-webkit-transform: rotate(90deg);
+			transform: rotate(90deg);
+  }
+  .tabs-custom input:checked ~ .tab-content {
+	max-height: 100vh;
+	padding: 1em;
+  }
+  

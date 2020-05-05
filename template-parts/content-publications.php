@@ -13,10 +13,10 @@
         <?php 
         if($count == 0){ ?>
             <!-- <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-heart-red.svg' ?>"></a> -->
-            <a download="<?= $publication_file_link ?>" href="<?= $publication_file_link ?>"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-blue.svg' ?>"></a>
+            <a target="_blank" href="<?= $publication_file_link ?>"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-blue.svg' ?>"></a>
         <?php }else{ ?>
            <!--  <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-heart-white.svg' ?>"></a> -->
-            <a download="<?= $publication_file_link ?>" href="<?= $publication_file_link ?>"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-white.svg' ?>"></a>
+            <a target="_blank" href="<?= $publication_file_link ?>"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-white.svg' ?>"></a>
         <?php } ?>
 
     </div>

@@ -8,9 +8,15 @@
 <!-- <div class="col-12 col-md-4 mb-4 mb-md-0"> -->
     <?php $title = get_the_title(); ?>
     <div class="events-list">
-        <?php echo the_post_thumbnail('medium',array( 'class' => 'img-fluid',
-        'alt' => $title,
-        'title' => $title)); ?>
+    <?php
+				if(has_post_thumbnail($id)){
+                    echo the_post_thumbnail('medium',array( 'class' => 'img-fluid',
+                    'alt' => $title,
+                    'title' => $title));
+				}else{ ?>
+                <img width="150" src="<?= get_template_directory_uri()?>.'/assets/images/conference.jpg'">;
+                <?php }
+			?>
         <div class="event-detail">
             <?php if($start_date->format('M j') !== $end_date->format('M j')): ?>
                 <h5><?=  $start_date->format('M j').' - '.$end_date->format('M j') ?></h5>

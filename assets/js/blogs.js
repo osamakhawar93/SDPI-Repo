@@ -4,6 +4,7 @@ var year;
 var author;
 var searchQuery;
 jQuery(document).ready(function($){
+    jQuery('#blog_author_select').select2();
     blogs_ajax();
 })
 
@@ -41,6 +42,7 @@ function clearAllFilters(){
     searchQuery = '';
     jQuery("ul.filters-list li select").each(function() { this.selectedIndex = 0 });
     jQuery(".ajax-search input").val('')
+    jQuery('#blog_author_select').select2();
     blogs_ajax();
 }
 function blogs_ajax(){

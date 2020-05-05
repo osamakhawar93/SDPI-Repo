@@ -18,41 +18,51 @@
     <div class="publication-detail <?php echo $class; ?>">
         <div class="action-btns d-inline-flex justify-content-between align-items-center">
        
-        <a download="<?= $publication_file_link ?>" href="<?= $publication_file_link ?>"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-white.svg' ?>"></a>
+        <a target="_blank" href="<?= $publication_file_link ?>"><img src="<?= get_template_directory_uri().'/assets/images/icn-download-white.svg' ?>"></a>
         </div>
         
         <h5>  <a href="<?= the_permalink($post->ID) ?>"> <?= get_the_title() ?>     </a> </h5>
         <p>
           <?php
 
-$count = count(get_field('publication_author',$post->ID));
+//$count = count(get_field('publication_author',$post->ID));
 $counter = 0;
           if(get_field('publication_author',$post->ID)){ ?>
 By:
 <?php
 
 
-if( have_rows('publication_author') ):
+$authors = $wpdb->get_results(
+	$wpdb->prepare( 
+		"
+			SELECT * 
+			FROM wp_postmeta
+			WHERE post_id  = %s
+			AND meta_key LIKE %s
+			AND meta_value <> %s
+		",
+		$post->ID,
+		'publication_author_%_author_link',
+		''
+	)
+);
 
-  // loop through the rows of data
-   while ( have_rows('publication_author') ) : the_row(); $counter++; ?>
-   <?php 
-   if(get_sub_field('author_link')){ 
-  $post_id = url_to_postid(get_sub_field('author_link'));
-     ?>
-  <a href="<?php the_sub_field('author_link') ?>">
-    <?= get_the_title($post_id) ?>
-  </a>
-   <?php } ?>
-      <?=  $counter==$count?'':", " ?>
-  <?php
-   endwhile;
- 
-   // no rows found
- 
- endif;
+$count = 0;
+foreach ($authors as $author){ ?>
+<a href="<?= get_the_permalink($author->meta_value) ?>">
+	<?= get_the_title($author->meta_value) ?>
+</a>
+<?php
+$count++;
+if($count!= count($authors)){ ?>
+ <span>,</span>
+<?php }
+}
 
-}          ?>
+          }
+?>
+
+
 
         </p>
     </div>

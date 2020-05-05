@@ -5,6 +5,7 @@ var year;
 var author;
 var searchQuery;
 jQuery(document).ready(function($){
+    jQuery('#author_select').select2();
     publications_ajax();
 })
 
@@ -47,7 +48,8 @@ function clearAllFilters(){
     author = '';
     searchQuery = '';
     jQuery("ul.filters-list li select").each(function() { this.selectedIndex = 0 });
-    jQuery(".ajax-search input").val('')
+    jQuery(".ajax-search input").val('');
+    jQuery('#author_select').select2();
     publications_ajax();
 }
 function publications_ajax(){

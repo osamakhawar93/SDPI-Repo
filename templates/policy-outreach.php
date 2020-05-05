@@ -38,7 +38,7 @@ get_header();
         <a class="nav-link" data-toggle="pill" data-target="#proactive_advocacy">Proactive Advocacy</a>
         </li>
         <li>
-        <a class="nav-link" data-toggle="pill" data-target="#staff">Staff</a>
+        <a class="nav-link" data-toggle="pill" data-target="#staff">Team</a>
         </li>
         <li class="nav-item">
         <a class="nav-link" target="_blank" href="<?= home_url('/').'all-events'; ?>">Events</a>

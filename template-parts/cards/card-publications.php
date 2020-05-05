@@ -3,7 +3,7 @@
   $publication_author = get_post_meta( $post->ID, 'publication_author');
   $publication_file_link = get_post_meta( $post->ID, 'publication_file');
   $publication_file_link = wp_get_attachment_url($publication_file_link[0]);
-
+  $publication_file_url = get_field('publication_url_link');
 ?>
 <?php  //$start_date->format('M j').' - '.$end_date->format('M j') ?>
 
@@ -22,12 +22,20 @@
     <p><?= wp_trim_words( get_the_content(), 25) ?></p>
     <p class='read-more clearfix'>
     <?php 
-        if($count == 0){ ?>
-            <!-- <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-heart-red.svg' ?>"></a> -->
-            <a class="download-card-btn float-left" download="<?= $publication_file_link ?>" href="<?= $publication_file_link ?>"><img width="20px" src="<?= get_template_directory_uri().'/assets/images/icn-download-blue.svg' ?>"></a>
-        <?php }else{ ?>
-           <!--  <a href="#"><img src="<?= get_template_directory_uri().'/assets/images/icn-heart-white.svg' ?>"></a> -->
-            <a class="download-card-btn float-left" download="<?= $publication_file_link ?>" href="<?= $publication_file_link ?>"><img width="20px" src="<?= get_template_directory_uri().'/assets/images/icn-download-white.svg' ?>"></a>
+        if($count == 0){ 
+            if($publication_file_url){ ?>
+                <a class="download-card-btn float-left" target="_blank" href="<?= $publication_file_url ?>"><img width="20px" src="<?= get_template_directory_uri().'/assets/images/icn-download-blue.svg' ?>"></a>
+            <?php }else{ ?>
+                <a class="download-card-btn float-left" target="_blank" href="<?= $publication_file_link ?>"><img width="20px" src="<?= get_template_directory_uri().'/assets/images/icn-download-blue.svg' ?>"></a>
+            <?php }?>
+        <?php }else{ 
+            if($publication_file_url){ ?>
+                <a class="download-card-btn float-left" target="_blank" href="<?= $publication_file_url ?>"><img width="20px" src="<?= get_template_directory_uri().'/assets/images/icn-download-white.svg' ?>"></a>
+            <?php }else{ ?>
+                <a class="download-card-btn float-left" target="_blank" href="<?= $publication_file_link ?>"><img width="20px" src="<?= get_template_directory_uri().'/assets/images/icn-download-white.svg' ?>"></a>
+            <?php }?>
+
+            
         <?php } ?>
     <a class="float-right" href="<?= get_the_permalink(); ?>">Read More</a></p>
 </div>

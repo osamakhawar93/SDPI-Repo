@@ -3,7 +3,7 @@
 <?php 
 
 get_header();
-
+/*  */
 ?>
 
 
@@ -31,16 +31,46 @@ get_header();
 </section>
 
 
+<?php
+
+
+
+$authors = $wpdb->get_results(
+	$wpdb->prepare( 
+		"
+		SELECT DISTINCT ID,post_title from wp_posts WHERE ID IN (Select meta_value from wp_postmeta WHERE meta_key LIKE %s AND meta_value <> %s) AND post_status='publish' Order by post_title
+        ",
+        'publication_author_%_author_link',
+        ''		
+	)
+);
+
+$years = $wpdb->get_results(
+    $wpdb->prepare(
+        "SELECT distinct substr(meta_value,1,4) AS year FROM wp_postmeta where meta_key LIKE %s AND meta_value <> %s Order by 1",
+        'publication_date',
+        ''
+    )
+);
+
+?>
+
+
+
+
+
+
 
 
 
 <div class="container">
     <div class="row">
         <div class="col-md-12 mb-3">
-        Our new website is in development phase. For any required publication, please email us at <a href="mailto:web@sdpi.org">web@sdpi.org</a>
+        <p class="publication-disclaimer">
+			You may not be able to access all our publications online because we are upgrading our website. We are sorry for the inconvenience. If you require any SDPI publication that you cannot find on our website, please write to us at <a href="mailto:web@sdpi.org">web@sdpi.org</a> and we will send you a soft copy of it. 
+			</p>
         </div>
     </div>
-
 <div class="filters-section">
 
                 <ul class="filters-list">
@@ -98,136 +128,30 @@ get_header();
                     </li>
 
                     <li>
-
-                        <?php
-
-                        $posts = get_posts(array(
-
-                            'post_type'   => 'team',
-
-                            'post_status' => 'publish',
-
-                            'posts_per_page' => -1,
-
-                            'fields' => 'ids'
-
-                            )
-
-                        );
-
-                        echo '<select class="filters-asc" onchange="onAuthorChange(this)">';
-
-                            echo ' <option value="Sort By Author" selected disabled>Sort By Author</option>';
-
-                        foreach($posts as $p): 
-
-                            if ($p) {
-
-                                echo  '<option value="'.$p.'">'.get_the_title($p).'</option>';  
-
-                            }
-
-                        endforeach; 
-
-                        echo '</select>';
-
-
-
-                        ?>
-
+                    
+                    <select  id="author_select" onchange="onAuthorChange(this)">
+                    <option value="Sort By Author" disabled selected>Sort By Author</option>
+                    <?php foreach ($authors as $author){ ?>
+                        <option value="<?= $author->ID ?>">
+                            <?= $author->post_title ?>
+                        </option>
+                    <?php
+                    }
+                    ?>
+                    </select>
                     </li>
 
-                   <!--  <li>
-
-                        <?php
-
-
-
-                           /*   $posts = get_posts(array(
-
-                                'post_type'   => 'publications',
-
-                                'post_status' => 'publish',
-
-                                'posts_per_page' => -1,
-
-                                'fields' => 'ids'
-
-                                )
-
-                            ); */
-
-                        ?>
-
-
-
-                            <select class="filters-asc" onchange="onAuthorChange(this)">
-
-                                <option value="Sort By Author" selected disabled>Sort By Author</option>
-
-                            <?php 
-
-                          /*  $authors = array();
-
-                            foreach($posts as $p): 
-
-                                $repeater_value = get_post_meta($p,"publication_author",true);
-
-                                if ($repeater_value) {
-
-                                    for ($i=0; $i<$repeater_value;$i++) {
-
-                                        $meta_key = 'publication_author_'.$i.'_author_name';
-
-                                        $sub_field_value = get_post_meta($p, $meta_key, true);
-
-                                        array_push($authors,$sub_field_value);
-
-                                    }
-
-                                }
-
-                            endforeach; 
-
-                            print_r($authors);
-
-                            $authors = array_unique($authors);
-
-                            foreach($authors as $author)
-
-                                if($author!=''){
-
-                                    echo  '<option value="'.$author.'">'.$author.'</option>';
-
-                                } */
-
-                            ?>
-
-                            </select>
-
-                    </li>  -->
 
                     <li>
 
                         <select class="filters-asc" onchange="onYearChange(this)">
 
                             <option value="Sort By Year" selected disabled>Sort By Year</option>
-
-                            <option value="2018">2018</option>
-
-                            <option value="2019">2019</option>
-
-                            <option value="2020">2020</option>
-
-                            <option value="2021">2021</option>
-
-                            <option value="2022">2022</option>
-
-                            <option value="2023">2023</option>
-
-                            <option value="2024">2024</option>
-
-                            <option value="2025">2025</option>
+                            <?php 
+                            foreach($years as $year){
+                                    echo "<option value=".$year->year.">".$year->year."</option>";
+                            }
+                            ?>
 
                         </select>
 

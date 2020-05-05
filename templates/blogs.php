@@ -7,7 +7,21 @@ get_header();
 ?>
 
 
+<?php
 
+
+
+$authors = $wpdb->get_results(
+	$wpdb->prepare( 
+		"
+		SELECT DISTINCT ID,post_title from wp_posts WHERE ID IN (Select meta_value from wp_postmeta WHERE meta_key LIKE %s AND meta_value <> %s) AND post_status='publish' Order by post_title
+        ",
+        'authors_%_author_link',
+        ''		
+	)
+);
+
+?>
 
 
 <section class="title-header d-flex align-items-center justify-content-center mb-0">
@@ -55,44 +69,19 @@ get_header();
                     </li>
 
                     <li>
-
-                        <?php
-
-                        $posts = get_posts(array(
-
-                            'post_type'   => 'team',
-
-                            'post_status' => 'publish',
-
-                            'posts_per_page' => -1,
-
-                            'fields' => 'ids'
-
-                            )
-
-                        );
-
-                        echo '<select class="filters-asc" onchange="onAuthorChange(this)">';
-
-                            echo ' <option value="Sort By Author" selected disabled>Sort By Author</option>';
-
-                        foreach($posts as $p): 
-
-                            if ($p) {
-
-                                echo  '<option value="'.$p.'">'.get_the_title($p).'</option>';  
-
-                            }
-
-                        endforeach; 
-
-                        echo '</select>';
-
-
-
-                        ?>
-
+                    
+                    <select id="blog_author_select" onchange="onAuthorChange(this)">
+                    <option value="Sort By Author" disabled selected>Sort By Author</option>
+                    <?php foreach ($authors as $author){ ?>
+                        <option value="<?= $author->ID ?>">
+                            <?= $author->post_title ?>
+                        </option>
+                    <?php
+                    }
+                    ?>
+                    </select>
                     </li>
+
 
                     <li>
 

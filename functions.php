@@ -184,7 +184,15 @@ function sdpi_scripts() {
 		wp_enqueue_style( 'jquery-ui-css', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
 		wp_enqueue_script( 'jquery-ui','https://code.jquery.com/ui/1.12.1/jquery-ui.js', array(), '20151228', true );
 	}
-	
+
+
+
+	//Select 2 
+
+	if(is_page_template( 'templates/publications.php' && is_page_template('templates/blogs.php') )){
+		wp_enqueue_style( 'select2-css', 'https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css');
+		wp_enqueue_script( 'select2-js','https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js', array(), '20151230', true );
+	}	
 }
 add_action( 'wp_enqueue_scripts', 'sdpi_scripts' );
 
@@ -662,15 +670,16 @@ function fetchEventsForSelectedMonth($atts){
    
 
 	$args = array(
+			'suppress_filters' => true,
 			'posts_per_page' => 15,
 			'post_type' => 'events',
-			'post_status' => 'publish',
+			'post_status' => 'publish', 
 			'meta_key' => 'start_date',
-			'orderby' => 'meta_value_num',
-			'order' => 'ASC',
+			'orderby'  => 'meta_value_num',
+			'order'    => 'ASC',
 			'meta_query' => array(
 				array(
-					'key' => 'end_date',
+					'key' => 'start_date',
 					'compare' => '>=',
 					'value' => $todays_date,
 				) 
@@ -824,7 +833,7 @@ function sdpi_getPublicationsForCategory($atts){
 	}
 
 	$args = array(
-			'posts_per_page' => -1,
+			'posts_per_page' => 20,
 			'post_type' => 'publications',
 			'tax_query' => $tax_query,
 	);
@@ -1072,7 +1081,7 @@ function getUpcomingProcurements_function(){
 				$count++;
 			endwhile;
 		echo '</ul>';
-		echo '<div class="pagination mt-5 mb-5">';
+		echo '<div class="pagination mt-2 mb-2">';
 	
 			wp_pagenavi( array( 'query' => $query)); 
 		
@@ -1170,6 +1179,43 @@ function cw_post_type_projects() {
 
 add_action('init', 'cw_post_type_projects');
 
+//hook into the init action and call create_book_taxonomies when it fires
+add_action( 'init', 'create_projects_hierarchical_taxonomy', 0 );
+ 
+//create a custom taxonomy name it project categories for your posts
+ 
+function create_projects_hierarchical_taxonomy() {
+ 
+// Add new taxonomy, make it hierarchical like categories
+//first do the translations part for GUI
+ 
+  $labels = array(
+    'name' => _x( 'Research Themes', 'taxonomy general name' ),
+    'singular_name' => _x( 'Research Theme', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Research Themes' ),
+    'all_items' => __( 'All Research Themes' ),
+    'parent_item' => __( 'Parent Research Theme' ),
+    'parent_item_colon' => __( 'Parent Research Theme:' ),
+    'edit_item' => __( 'Edit Research Theme' ), 
+    'update_item' => __( 'Update Research Theme' ),
+    'add_new_item' => __( 'Add New Research Theme' ),
+    'new_item_name' => __( 'New Research Theme' ),
+    'menu_name' => __( 'Research Theme' ),
+  );    
+ 
+// Now register the taxonomy
+ 
+  register_taxonomy('research_theme',array('projects'), array(
+    'hierarchical' => true,
+    'labels' => $labels,
+    'show_ui' => true,
+    'show_admin_column' => true,
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'research_theme' ),
+  ));
+ 
+}
+
 
 /**
  * Shortcode To Fetch New Arrivals
@@ -1262,14 +1308,42 @@ add_action('wp_ajax_nopriv_publications_ajax_function', 'publications_ajax_funct
 
 add_shortcode('publications_ajax_shortcode', 'publications_ajax_function_call'); 
 
+
+function add_cond_to_where( $where ) {
+
+	//Replace showings_$ with repeater_slug_$
+	$where = str_replace("meta_key = 'publication_author_$", "meta_key LIKE 'publication_author_%", $where);
+
+	return $where;
+}
+
+add_filter('posts_where', 'add_cond_to_where');
+
  /**
   * Publications ajax 
   */
   function publications_ajax_function_call(){
 
+
+/* 	$query_args = array(
+		'post_type' => 'publications',
+		'post_status' => 'publish',
+		'orderby' => 'menu_order',
+		'posts_per_page' => -1,
+		'meta_query' => array(
+			'0' => array(
+				'key' => 'publication_author_$_author_link',
+				'value' => 353,
+				'compare' => '=',
+			),
+			'relation' => 'OR',
+		),
+	); */
+	
+
 	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
 	if(isset($_POST['page'])){
-		/* Pagination vars */
+
 		
 		$page = sanitize_text_field($_POST['page']);
 
@@ -1292,9 +1366,6 @@ add_shortcode('publications_ajax_shortcode', 'publications_ajax_function_call');
 		$start = $page * $per_page;
 
 
-		/**
-		 * This code is just to fetch the total posts for Training to help with pagination
-		 */
 		$totalPosts = count(get_posts(array(
 			'post_type' => 'publications',
 			'post_status'=>'publish',
@@ -1312,14 +1383,7 @@ add_shortcode('publications_ajax_shortcode', 'publications_ajax_function_call');
 			$tax_query = '';
 		}
 
-		if($_POST['author']){
-			/* $author_query = array(
-				array(
-					'key'       => 'publication_author_$_author_name',
-					'value'     => $_POST['author'],
-					'compare'   => '='
-				),
-			); */
+		if($_POST['author']){			
 			$author_query = array(
 				array(
 					'key'       => 'publication_author_$_author_link',
@@ -1336,7 +1400,7 @@ add_shortcode('publications_ajax_shortcode', 'publications_ajax_function_call');
 			//Today's date$next_year
 $start_date = date('Ymd', strtotime(date($_POST['year'].'-01-01'))); 
 //Future date - the arg will look between today's date and this future date to see if the post fall within the 2 dates.
-$end_date = date('Ymd', strtotime(date($next_year.'-12-31')));
+$end_date = date('Ymd', strtotime(date($_POST['year'].'-12-31')));
 
 
 			$year_array = array(
@@ -1353,7 +1417,7 @@ $end_date = date('Ymd', strtotime(date($next_year.'-12-31')));
 
 
 		$args = array(
-			'suppress_filters' => true,
+		/* 	'suppress_filters' => true, */
 			'post_type'=> 'publications',
 			'post_status'=>'publish',
 			'paged' => $paged,
@@ -1364,7 +1428,7 @@ $end_date = date('Ymd', strtotime(date($next_year.'-12-31')));
 			'orderby'          => 'meta_value_num',
 			'order'             => $_POST['sort_order'],
 			'meta_query' => array(
-				'relation' => 'OR', 
+				'relation' => 'AND', 
 				$year_array,
 				$author_query
 			),
@@ -1385,6 +1449,10 @@ $end_date = date('Ymd', strtotime(date($next_year.'-12-31')));
 				'order'             => $_POST['sort_order'],
 			);
 		}
+	
+		/* echo '<pre>';
+		print_r($args);
+		exit;  */
 
 	$query = new WP_Query( $args );
 	$totalPosts = $query->found_posts;
@@ -1461,18 +1529,9 @@ $end_date = date('Ymd', strtotime(date($next_year.'-12-31')));
 		}
 	}	
 	die();
+	
 }
 
-
-function add_cond_to_where( $where ) {
-
-	//Replace showings_$ with repeater_slug_$
-	$where = str_replace("meta_key = 'publication_author_$", "meta_key LIKE 'publication_author_%", $where);
-
-	return $where;
-}
-
-add_filter('posts_where', 'add_cond_to_where');
 
 
  /**
@@ -1480,7 +1539,7 @@ add_filter('posts_where', 'add_cond_to_where');
  */
 function filters_blogs() {
 	if( is_page( array( 'blogs' ) ) ){
-	 wp_enqueue_script( 'blogs-ajax-script', get_template_directory_uri() . '/assets/js/blogs.js', array('jquery') );
+	 wp_enqueue_script( 'blogs-ajax-script', get_template_directory_uri() . '/assets/js/blogs.js', array('jquery'), '20151232' );
 	 wp_localize_script( 'blogs-ajax-script', 'blogs_ajax_url', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 	}
 }
@@ -1494,6 +1553,17 @@ add_action('wp_ajax_nopriv_blogs_ajax_function', 'blogs_ajax_function_call');
  /**
   * Publications Blog 
   */
+
+function add_cond_to_where_2( $where ) {
+
+	//Replace showings_$ with repeater_slug_$
+	$where = str_replace("meta_key = 'authors_$", "meta_key LIKE 'author_%", $where);
+
+	return $where;
+}
+
+add_filter('posts_where', 'add_cond_to_where_2');
+
   function blogs_ajax_function_call(){
 	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
 	if(isset($_POST['page'])){
@@ -1550,7 +1620,7 @@ add_action('wp_ajax_nopriv_blogs_ajax_function', 'blogs_ajax_function_call');
 
 
 		$args = array(
-			'suppress_filters' => true,
+		/* 	'suppress_filters' => true, */
 			'post_type'=> 'post',
 			'post_status'=>'publish',
 			'paged' => $paged,
@@ -1663,15 +1733,7 @@ add_action('wp_ajax_nopriv_blogs_ajax_function', 'blogs_ajax_function_call');
 }
 
 
-function add_cond_to_where_2( $where ) {
 
-	//Replace showings_$ with repeater_slug_$
-	$where = str_replace("meta_key = 'authors_$", "meta_key LIKE 'authors_%", $where);
-
-	return $where;
-}
-
-add_filter('posts_where', 'add_cond_to_where_2');
 
 
 /////////
@@ -2162,9 +2224,8 @@ function sdpi_fetchUnits($atts){
 	if ( $count > 0 ) {
 		echo '<div class="row mt-md-5">';
 		foreach ( $posts as $post ) {
-			echo '<div class="col-md-6 col-6 text-center unit-center mb-5">';
+			echo '<div class="col-md-6 col-6 text-left unit-center mb-5">';
 				echo '<a href="'.home_url().'/unit-details?unit_id='.$post->ID.'">';
-                    echo  '<img width="100%" src='.get_template_directory_uri().'/assets/images/team.png />';
                     echo '<p>'.$post->post_title.'</p>';
 				echo '</a>';
 			echo '</div>';
@@ -2174,3 +2235,106 @@ function sdpi_fetchUnits($atts){
 
  }
  add_shortcode('getUnits','sdpi_fetchUnits');
+
+
+
+/**
+ * Shortcode To Fetch Project Categoeis and sub categories
+ */
+
+function sdpi_fetchProjectsCategories($atts){
+	$att = shortcode_atts( array(
+        'terms' => 5,
+	), $atts );
+
+	$terms = get_terms( array(
+		'taxonomy' => 'research_theme',
+		'hide_empty'  => false, 
+		'parent' => 0 
+		)
+	);
+
+	$count = count( $terms );
+	if ( $count > 0 ) {
+		echo '<div class="row tabs-custom mt-md-5">';
+		foreach ( $terms as $term ) {
+			$var = 'chk'.$term->term_id;
+			$term_children = get_term_children( $term->term_id, 'research_theme' );
+			$hasChildren  = count($term_children);
+			echo '<div class="col-md-6 col-12 text-center unit-center mb-5 tab">';
+				if ($hasChildren>0){
+					echo '<input type="checkbox" id="'.$var.'">';
+					echo '<label class="tab-label" for="'.$var.'">'.$term->name.'</label>';
+				}else{
+					
+					echo '<label class="tab-label" for="'.$var.'"><a href="/project-theme?theme='.$term->term_id.'">'.$term->name.'</a></label>';
+				}
+				   if(count($term_children)){
+					 echo '<div class="tab-content">';
+					 echo '<ul class="text-left">';
+					 foreach ( $term_children as $child ) {
+						 $term = get_term_by( 'id', $child, 'research_theme' );
+						 echo '<li><a href="/project-theme?theme=' .$child. '">' . $term->name . '</a></li>';
+					 }
+					 echo '</ul>';
+					echo '</div>';
+				}
+			echo '</div>';
+		}
+		echo '</div>';
+	}
+
+ }
+ add_shortcode('getProjectCategories','sdpi_fetchProjectsCategories');
+
+
+
+   /**
+ * Shortcode To Fetch Project By Terms
+ */
+
+function sdpi_fetchProjectsByThemes($atts){
+	$att = shortcode_atts( array(
+        'term' => 5,
+	), $atts );
+
+
+
+	$args = array(
+		'post_type' => 'projects',
+		'numberposts' => -1,
+		'tax_query' => array(
+		  array(
+			'taxonomy' => 'research_theme',
+			'field' => 'term_id', 
+			'terms' => $att['term'], /// Where term_id of Term 1 is "1".
+			'include_children' => true
+		  )
+		)
+	  );
+
+	  $query = new WP_Query( $args );
+	  $totalPosts = $query->found_posts;
+	  ob_start();
+	  $response = '';
+	  if( $query->have_posts() ) :
+		  echo '<div id="timeline-content"><ul class="timeline">';
+		  while( $query->have_posts() ): $query->the_post();
+		  $response .= get_template_part('template-parts/ajax','blogs');	
+		  endwhile;
+		  echo '</ul></div>';
+		  wp_reset_postdata(); wp_reset_query();
+	  else :
+		  echo 'No News for selected range';
+	  endif;
+
+ }
+ add_shortcode('getProjectsByTheme','sdpi_fetchProjectsByThemes');
+
+
+ //Deactivating PLugins
+ function filter_plugin_updates( $value ) {
+    unset( $value->response['advanced-custom-fields-pro/acf.php'] );
+    return $value;
+}
+add_filter( 'site_transient_update_plugins', 'filter_plugin_updates' );

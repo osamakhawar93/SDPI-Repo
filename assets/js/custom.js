@@ -3,10 +3,13 @@ jQuery(document).ready(function($){
   if($('.homepage_slider').length>0){
     $('.homepage_slider').slick({
       arrows:true,
+      infinite:true,
       loop: true,
+      autoplay:true,
+      autoplaySpeed: 4000,
       slidesToShow: 1,
       slidesToScroll: 1,
-      dots: true,
+      dots: false,
       prevArrow:"<div class='a-left control-c prev slick-prev'></div>",
       nextArrow:"<div class='a-right control-c next slick-next'></div>",
       responsive: [
@@ -110,7 +113,8 @@ jQuery(document).ready(function($){
             breakpoint: 480,
             settings: {
               slidesToShow: 1,
-              slidesToScroll: 1
+              slidesToScroll: 1,
+              dots: false,
             }
           }
           // You can unslick at a given breakpoint now by adding:
@@ -158,7 +162,8 @@ jQuery(document).ready(function($){
             breakpoint: 480,
             settings: {
               slidesToShow: 1,
-              slidesToScroll: 1
+              slidesToScroll: 1,
+              dots: false,
             }
           }
           // You can unslick at a given breakpoint now by adding:

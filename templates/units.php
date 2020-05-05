@@ -23,7 +23,7 @@ $unit_id = $_GET['unit_id'];
                 echo  $unit_detail[0];
                 ?>
                 </div>
-                <h3 class="unit-headings text-left">Research Lead</h3>
+                <h3 class="unit-headings text-left">Lead</h3>
                 <?php 
             $leadTeamMember = get_post_meta( $unit_id, 'lead_team_member');
             $leadTeamMember = $leadTeamMember[0];
@@ -44,11 +44,11 @@ $unit_id = $_GET['unit_id'];
                 </div>
 
                                                                     <?php }else{ ?>
-<p class="text-left">No Team Lead Assigned</p>
+<p class="text-left">No Lead Assigned</p>
                                                                    <?php } ?>
 
                
-            <h3 class="unit-headings mt-5 mb-5 text-left">Research Staff Members</h3>
+            <h3 class="unit-headings mt-5 mb-1 text-left">Staff</h3>
                 <?php
                 
                 if ($staff) { ?>

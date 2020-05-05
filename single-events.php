@@ -20,21 +20,21 @@ $id = get_the_ID();
 
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
-		<section class="custom-page-content-blocks mt-5">
+		<section class="custom-page-content-blocks mt-3">
     		<div class="container">
 		<?php
 		while ( have_posts() ) :
 			the_post(); ?>
 			<?php
 				if(has_post_thumbnail($id)){ ?>
-				<div class="feat-img mb-5">
+				<div class="feat-img mb-2">
 					<?php
 					echo the_post_thumbnail('large',array( 'class' => 'img-fluid' )); 
 					?>
 				</div>
 				<?php }
 			?>
-			<div class="blog-single-title mb-4">
+			<div class="blog-single-title mb-2">
 					<?= the_title() ?>
 			</div>
 			<div class="row">
@@ -46,11 +46,19 @@ $id = get_the_ID();
                     			   <?php } ?>
 			    </div> 
 			    <div class="col-12 col-md-4">
+				
+					<?php 
+					if(get_field('end_time')): ?>
 			        <p class="download-icn"><img src="<?= get_template_directory_uri().'/assets/images/icn-clock-blue.svg' ?>" /> <?= get_field('start_time') ?> to <?= get_field('end_time') ?></p>
-			    </div>
+					<?php else: ?>
+						<p class="download-icn"><img src="<?= get_template_directory_uri().'/assets/images/icn-clock-blue.svg' ?>" /> <?= get_field('start_time') ?></p>
+					<?php endif; ?>
+					</div>
+				<?php if(get_field('location')):?>
 			    <div class="col-12 col-md-4">
 			        <p class="download-icn"><img src="<?= get_template_directory_uri().'/assets/images/icn-location.svg' ?>" /> <?= get_field('location') ?></p>
-			    </div>
+				</div>
+				<?php endif; ?>
 			</div>
 			
 			<?php
@@ -99,14 +107,14 @@ $id = get_the_ID();
 		endwhile; // End of the loop.
 		?>   
 			<hr class="blog-separator" />
-	<div class="warfare text-center mt-5">
-        <?php  echo do_shortcode('[social_warfare buttons="facebook,twitter"]');?>         
-    </div>
+			<div class="warfare text-center">
+				<?php  echo do_shortcode('[social_warfare buttons="facebook,twitter"]');?>         
+			</div>
 			</div>
 		</section>
 		<section id="related-posts" class="clearfix">
 			<div class="container">
-			<div class="section-heading mb-5"><p class="pt-0 pb-0 font-weight-bold">More Events</p></div>
+			<div class="section-heading mb-3"><p class="pt-0 pb-0 mt-3 font-weight-bold">More Events</p></div>
 				<div class="row">
 				<?php 
 					$today = date( 'Y-m-d' );
@@ -128,13 +136,13 @@ $id = get_the_ID();
 					if(count($related)>0):
 					foreach($related as $post) :
 					$category = get_the_category( $post->ID ); ?>
-					<div class="col-sm-4 post-item-sm mb-4 mb-sm-0">
+					<div class="col-sm-4 post-item-sm mb-2 mb-sm-0">
 						<div class="blog-thumb text-center">
 							<a  href="<?= the_permalink($post->ID); ?>">
 								<?php
 
 									if(has_post_thumbnail($post->ID)){
-										echo the_post_thumbnail('thumbnail',array( 'class' => 'img-fluid' )); 
+										echo the_post_thumbnail('medium',array( 'class' => 'img-fluid' )); 
 										}else{
 										echo  '<img width="150" src='.get_template_directory_uri().'/assets/images/team.png />';
 									}
@@ -147,14 +155,19 @@ $id = get_the_ID();
 									
 
 					<?php
-	$id = get_the_ID();
-	$start_date = get_post_meta( $id, 'start_date');
-	$end_date = get_post_meta( $id , 'end_date');
-	$start_date = DateTime::createFromFormat('Ymd', $start_date[0]);
-	$end_date = DateTime::createFromFormat('Ymd', $end_date[0]);
+					$id = get_the_ID();
+					$start_date = get_post_meta( $id, 'start_date');
+					$end_date = get_post_meta( $id , 'end_date');
+					$start_date = DateTime::createFromFormat('Ymd', $start_date[0]);
+					$end_date = DateTime::createFromFormat('Ymd', $end_date[0]);
 					?>
+
+			<?php if($start_date->format('M j') == $end_date->format('M j')){ ?>
+				<p><?= $start_date->format('M j') ?></p>
+					<?php }else{ ?>
 						<p><?= $start_date->format('M j')."-".$end_date->format('M j') ?></p>
-			
+				<?php } ?>
+								   
 						</div>
 						
 					</div>

@@ -11,15 +11,15 @@ get_header();
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 about-template-content text-center mb-3">
+            <?= get_field('main_heading') ?>
+        </div>
+        <div class="col-md-12 text-center">
         <img class="about-icon" width="190" src="<?= get_field('main_icon') ?>" alt="Upcoming Trainings Icon"/>
         </div>
     </div>
     <div class="row mt-md-5">
         <div class="col-md-12 col-lg-12 col-xl-12 about-template-content">
-            <?= get_field('main_heading') ?>
-            <h4><?= get_field('sub_heading') ?></h4>
-           
             <div class="shortcode">
                 <?=  get_field("about_shortcode") ?>
             </div>

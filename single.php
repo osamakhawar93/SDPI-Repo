@@ -12,7 +12,7 @@ get_header();
 
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
-		<section class="custom-page-content-blocks mt-5">
+		<section class="custom-page-content-blocks mt-5 mb-0">
     		<div class="container">
 		<?php
 		while ( have_posts() ) :
@@ -30,7 +30,7 @@ get_header();
                 if(get_field('file_link')){ ?>
                 <p class="download-icn mt-0">
 					<img width='20' src="<?= get_template_directory_uri().'/assets/images/icn-download-blue.svg'?>"/>
-					<a download="<?= get_field('file_link') ?>" href="<?= get_field('file_link') ?>">Download Complete Article</a>
+					<a target="_blank" href="<?= get_field('file_link') ?>">Download Complete Article</a>
                 </p>
                 <?php
                 }
@@ -95,17 +95,17 @@ get_header();
 
 		if($publised == 'yes'){
 			echo '<div class="row">'; ?>
-			<p class="disclaimer mb-0">This article was originally publised <a target="_blank" href="<?= get_field('blog_publised_link') ?>">here</a></p>
+			<p class="disclaimer mb-0">This article was originally published at: <span style="color:black;font-style:normal"><?= get_field('blog_publised_link') ?></span></p>
 			<?php echo '</div>';
 		}
 
 		if($approved == 'yes'){
 			echo '<div class="row">
-			<p class="disclaimer">Approved By SDPI</p>
+			<p class="disclaimer mb-0">Approved By SDPI</p>
 			</div>';
 		}else{
 			echo '<div class="row">
-				<p class="disclaimer">The opinions expressed in this article are the author\'s own and do not necessarily reflect the viewpoint or stance of SDPI.</p>
+				<p class="disclaimer mb-0">The opinions expressed in this article are the author\'s own and do not necessarily reflect the viewpoint or stance of SDPI.</p>
 			</div>';
 		}
 		?>   
