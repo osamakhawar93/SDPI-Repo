@@ -5,17 +5,18 @@
             $start_date = DateTime::createFromFormat('Ymd', $start_date[0]);
             $end_date = DateTime::createFromFormat('Ymd', $end_date[0]); 
         ?>
-        <li class="event d-sm-flex" data-date="<?php echo $post_type=="events"?$start_date->format('M j')."-".$end_date->format('M j'): get_the_date() ?>">
+        <li class="event d-sm-flex" data-date="<?php echo $post_type=="events"?$start_date->format('m/j/Y')." - ".$end_date->format('m/j/Y'): get_the_date() ?>">
+        <?php if($start_date && $end_date): ?>
             <p class="event-date mt-3 d-none d-mobile">
-                <?php echo $post_type=="events"?$start_date->format('M j')."-".$end_date->format('M j'): get_the_date() ?>
+                <?php echo $post_type=="events"?$start_date->format('M j, Y')."-".$end_date->format('M j, Y'): get_the_date() ?>
             </p>
+            <?php endif; ?>
             <?php
             if($post_type == "events"){
                 if(has_post_thumbnail()){
                     echo get_the_post_thumbnail($post->ID ,'thumbnail' );
                 }
-            }
-               
+            }  
             ?>
             <div class="pl-sm-3">
             <h3> 

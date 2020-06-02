@@ -1,5 +1,6 @@
 var page = 1;
 var sortOrder = 'DESC';
+var categoryId;
 var year;
 var author;
 var searchQuery;
@@ -97,6 +98,11 @@ function onSortOrderChange(elem){
     sortOrder = elem.value;
     news_ajax();
 }
+function onCategoryChange(elem){
+  page = 1;
+  categoryId = elem.value;
+  news_ajax();
+}
 function onAuthorChange(elem){
     page = 1
     author = elem.value;
@@ -113,6 +119,7 @@ function clearAllFilters(){
     year = '';
     author = '';
     searchQuery = '';
+    categoryId = '';
     FromDate = '';
     ToDate = '';
     jQuery("#from").datepicker('setDate', null);
@@ -129,6 +136,7 @@ function news_ajax(){
         sort_order:sortOrder,
         year:year,
         author:author,
+        category_id:categoryId,
         search_query:searchQuery,
         ToDate:ToDate,
         FromDate:FromDate

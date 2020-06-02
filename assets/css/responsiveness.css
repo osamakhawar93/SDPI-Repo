@@ -154,6 +154,17 @@
         min-height:auto;
         width:125px;
     }
+    .not-found{
+        font-size: 7em;
+    }
+    .banner-img-small{
+        height:100px;
+        justify-content: center;
+    }
+    .banner-img-small h2, .banner-img-small p{
+        font-size:20px;
+        padding-left: 0;
+    }
     .page-id-611 .custom-page-content-blocks a,
     .tabs-custom .tab-label{
         font-size:16px;

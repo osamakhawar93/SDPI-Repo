@@ -625,6 +625,45 @@ function cw_post_type_events() {
 
 add_action('init', 'cw_post_type_events');
 
+//hook into the init action and call create_book_taxonomies when it fires
+add_action( 'init', 'create_events_hierarchical_taxonomy', 0 );
+ 
+//create a custom taxonomy name it topics for your posts
+ 
+function create_events_hierarchical_taxonomy() {
+ 
+// Add new taxonomy, make it hierarchical like categories
+//first do the translations part for GUI
+ 
+  $labels = array(
+    'name' => _x( 'Events Category', 'taxonomy general name' ),
+    'singular_name' => _x( 'Events Category', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Events Categories' ),
+    'all_items' => __( 'All Events Categories' ),
+    'parent_item' => __( 'Parent Events Category' ),
+    'parent_item_colon' => __( 'Parent Events Category:' ),
+    'edit_item' => __( 'Edit Events Category' ), 
+    'update_item' => __( 'Update Events Category' ),
+    'add_new_item' => __( 'Add New Events Category' ),
+    'new_item_name' => __( 'New Events Category' ),
+    'menu_name' => __( 'Events Category' ),
+  );    
+ 
+// Now register the taxonomy
+ 
+  register_taxonomy('events_category',array('events'), array(
+    'hierarchical' => true,
+    'labels' => $labels,
+    'show_ui' => true,
+    'show_admin_column' => true,
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'events_category' ),
+  ));
+ 
+}
+
+
+
 
  /**
  * Events Calendar Shortcode 
@@ -812,6 +851,45 @@ function create_publications_hierarchical_taxonomy() {
  
 }
 
+
+// Filter Code to show filter by taxonomies on admin area 
+
+function filter_publications_by_taxonomies( $post_type, $which ) {
+
+	// Apply this only on a specific post type
+	if ( 'publications' !== $post_type )
+		return;
+
+	// A list of taxonomy slugs to filter by
+	$taxonomies = array( 'publication_category' );
+
+	foreach ( $taxonomies as $taxonomy_slug ) {
+
+		// Retrieve taxonomy data
+		$taxonomy_obj = get_taxonomy( $taxonomy_slug );
+		$taxonomy_name = $taxonomy_obj->labels->name;
+
+		// Retrieve taxonomy terms
+		$terms = get_terms( $taxonomy_slug );
+
+		// Display filter HTML
+		echo "<select name='{$taxonomy_slug}' id='{$taxonomy_slug}' class='postform'>";
+		echo '<option value="">' . sprintf( esc_html__( 'Show All %s', 'text_domain' ), $taxonomy_name ) . '</option>';
+		foreach ( $terms as $term ) {
+			printf(
+				'<option value="%1$s" %2$s>%3$s (%4$s)</option>',
+				$term->slug,
+				( ( isset( $_GET[$taxonomy_slug] ) && ( $_GET[$taxonomy_slug] == $term->slug ) ) ? ' selected="selected"' : '' ),
+				$term->name,
+				$term->count
+			);
+		}
+		echo '</select>';
+	}
+
+}
+add_action( 'restrict_manage_posts', 'filter_publications_by_taxonomies' , 10, 2);
+
 /**
  * Shortcode To Fetch Publicaations for certain category
  */
@@ -905,6 +983,43 @@ function sdpi_post_type_news() {
 add_action('init', 'sdpi_post_type_news');
 
 
+//hook into the init action and call sdpi_post_type_news when it fires
+ 
+add_action( 'init', 'create_news_nonhierarchical_taxonomy', 0 );
+ 
+function create_news_nonhierarchical_taxonomy() {
+ 
+// Labels part for the GUI
+ 
+  $labels = array(
+    'name' => _x( 'News Categories', 'taxonomy general name' ),
+    'singular_name' => _x( 'News Category', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search News Categories' ),
+    'popular_items' => __( 'Popular News Categories' ),
+    'all_items' => __( 'All News Categories' ),
+    'parent_item' => null,
+    'parent_item_colon' => null,
+    'edit_item' => __( 'Edit News Category' ), 
+    'update_item' => __( 'Update Category' ),
+    'add_new_item' => __( 'Add New Category' ),
+    'new_item_name' => __( 'New Category Name' ),
+    'separate_items_with_commas' => __( 'Separate Categories with commas' ),
+    'add_or_remove_items' => __( 'Add or remove News Categories' ),
+    'choose_from_most_used' => __( 'Choose from the most used News Categories' ),
+    'menu_name' => __( 'News Category' ),
+  ); 
+ 
+// Now register the non-hierarchical taxonomy like tag
+ 
+register_taxonomy('news_category',array('news'), array(
+    'hierarchical' => true,
+    'labels' => $labels,
+    'show_ui' => true,
+    'show_admin_column' => true,
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'news_category' ),
+  ));
+}
 
 /**
  * Shortcode To Fetch Latest News
@@ -948,7 +1063,8 @@ function getTimeLineTemplateForGivenType_function($atts){
 	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
 
 	$att = shortcode_atts( array(
-		'type'=> 'post'
+		'type'=> 'post',
+		'search'=>''
 	), $atts );
 
 	if($att['type'] == 'publications'){
@@ -963,20 +1079,15 @@ function getTimeLineTemplateForGivenType_function($atts){
 			$args = array(
 			'post_type' => $att['type'],
 			'post_status'=>'publish',
+			's' => $att['search'] ,
 			'paged' => $paged,
 			'posts_per_page'=>10,
-			/* 'date_query' => array(
-				array(
-					'year'  => $today['year'],
-					'month' => $today['mon'],
-					'day'   => $today['mday'],
-				),
-			), */
 		);
 	}
 
 		$query = new WP_Query( $args );
-
+/* 		echo '<pre>'
+		print_r($query->posts); */
 		if( $query->have_posts() ) :
 			$count = 0; 
 			echo '<div id="timeline-content" class="mb-3"><ul class="timeline">';
@@ -1036,7 +1147,7 @@ function cw_post_type_procurements() {
 		'public' => true,
 		'query_var' => true,
 		'rewrite' => array('slug' => 'procurements'),
-		'has_archive' => true,
+		'has_archive' => false,
 		'hierarchical' => false,
 	);
 	register_post_type('procurements', $args);
@@ -1226,14 +1337,25 @@ function sdpi_fetchNewArrivals($atts){
 	$args = array(
 			'post_type' => array( 'news', 'publications', 'events','careers','projects','post'),
 			'posts_per_page' => 20,
-			'orderby' => 'modified',
+			'orderby' => 'publish_date',
 			'order' => 'Desc',
-			'post_status'=> 'publish'
+			'post_status'=> 'publish',
+			'meta_query' => array(
+				'relation' => 'OR',
+				array(
+					'key' => 'new_post',
+					'value' => 'yes',
+					'compare' => '=',
+				),
+				array(
+					'key' => 'new_post',
+					'compare' => 'NOT EXISTS'
+				)
+				
+			)
 	);
 	$query = new WP_Query( $args );
 	$response = '';
-
-
 
 	if( $query->have_posts() ) :
 	
@@ -1324,23 +1446,6 @@ add_filter('posts_where', 'add_cond_to_where');
   */
   function publications_ajax_function_call(){
 
-
-/* 	$query_args = array(
-		'post_type' => 'publications',
-		'post_status' => 'publish',
-		'orderby' => 'menu_order',
-		'posts_per_page' => -1,
-		'meta_query' => array(
-			'0' => array(
-				'key' => 'publication_author_$_author_link',
-				'value' => 353,
-				'compare' => '=',
-			),
-			'relation' => 'OR',
-		),
-	); */
-	
-
 	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
 	if(isset($_POST['page'])){
 
@@ -1376,11 +1481,19 @@ add_filter('posts_where', 'add_cond_to_where');
 					array(
 						'taxonomy' => 'publication_category',
 						'field' => 'term_id',
-						'terms' => $_POST['category_id']
+						'terms' => $_POST['category_id'],
+						'exclude' => $_POST['dontShowCategory'],
 					)
 				);
 		}else{
-			$tax_query = '';
+			$tax_query = array(
+				array(
+					'taxonomy' => 'publication_category',
+					'field'    => 'term_id',
+					'terms'    => array($_POST['dontShowCategory']),
+					'operator' => 'NOT IN',
+				)
+			);
 		}
 
 		if($_POST['author']){			
@@ -1398,9 +1511,9 @@ add_filter('posts_where', 'add_cond_to_where');
 		if($_POST['year']){
 		$next_year = $_POST['year']+1;
 			//Today's date$next_year
-$start_date = date('Ymd', strtotime(date($_POST['year'].'-01-01'))); 
-//Future date - the arg will look between today's date and this future date to see if the post fall within the 2 dates.
-$end_date = date('Ymd', strtotime(date($_POST['year'].'-12-31')));
+		$start_date = date('Ymd', strtotime(date($_POST['year'].'-01-01'))); 
+		//Future date - the arg will look between today's date and this future date to see if the post fall within the 2 dates.
+		$end_date = date('Ymd', strtotime(date($_POST['year'].'-12-31')));
 
 
 			$year_array = array(
@@ -1417,7 +1530,6 @@ $end_date = date('Ymd', strtotime(date($_POST['year'].'-12-31')));
 
 
 		$args = array(
-		/* 	'suppress_filters' => true, */
 			'post_type'=> 'publications',
 			'post_status'=>'publish',
 			'paged' => $paged,
@@ -1427,12 +1539,14 @@ $end_date = date('Ymd', strtotime(date($_POST['year'].'-12-31')));
 			'meta_key'          => 'publication_date',
 			'orderby'          => 'meta_value_num',
 			'order'             => $_POST['sort_order'],
+			'suppress_filters' => false,
+			'ignore_custom_sort' =>true,
 			'meta_query' => array(
 				'relation' => 'AND', 
 				$year_array,
 				$author_query
 			),
-			'tax_query' => $tax_query
+			'tax_query' => $tax_query,
 		);
 		
 		if($_POST['search_query'] != ''){
@@ -1449,10 +1563,6 @@ $end_date = date('Ymd', strtotime(date($_POST['year'].'-12-31')));
 				'order'             => $_POST['sort_order'],
 			);
 		}
-	
-		/* echo '<pre>';
-		print_r($args);
-		exit;  */
 
 	$query = new WP_Query( $args );
 	$totalPosts = $query->found_posts;
@@ -1986,17 +2096,9 @@ add_action('wp_ajax_nopriv_news_ajax_function', 'news_ajax_function_call');
 			'post_status'=>'publish',
 		)));
 
-		/* if($_POST['author']){
-			$author_query = array(
-				array(
-					'key'       => 'authors_$_author_link',
-					'value'     => $_POST['author'],
-					'compare'   => '='
-				),
-			);
-		}else{
-			$author_query = '';
-		} */
+		if($_POST['ToDate'] == ''){
+			$_POST['ToDate'] = date('Ymd');
+		}
 
 		if($_POST['FromDate'] || $_POST['ToDate']){
 			$year_array = array(
@@ -2018,10 +2120,18 @@ add_action('wp_ajax_nopriv_news_ajax_function', 'news_ajax_function_call');
 			$year_array = '';
 		}
 
+		if($_POST['category_id']){
+			$tax_query = array(
+					array(
+						'taxonomy' => 'news_category',
+						'field' => 'term_id',
+						'terms' => $_POST['category_id'],
+					)
+				);
+		}else{
+			$tax_query = '';
+		}
 
-	/* 	echo $_POST['FromDate'].'--------------'.$_POST['ToDate'];
-		exit;  */
- 
 
 		$args = array(
 			'suppress_filters' => true,
@@ -2047,6 +2157,7 @@ add_action('wp_ajax_nopriv_news_ajax_function', 'news_ajax_function_call');
 					'type'    => 'DATE',
 				),
 			),
+			'tax_query' => $tax_query,
 		);
 		if($_POST['ToDate'] == '' && $_POST['FromDate'] == ''){
 			$args = array(
@@ -2338,3 +2449,6 @@ function sdpi_fetchProjectsByThemes($atts){
     return $value;
 }
 add_filter( 'site_transient_update_plugins', 'filter_plugin_updates' );
+
+
+

@@ -39,19 +39,21 @@ $id = get_the_ID();
 			</div>
 			<div class="row">
 			    <div class="col-12 col-md-4">
+				<?php if($start_date && $end_date): ?>
 			        			    <?php if($start_date->format('M j') == $end_date->format('M j')){ ?>
                     			        <p class="download-icn"><img src="<?= get_template_directory_uri().'/assets/images/icn-calendar-blue.svg' ?>" /></span> <?= $start_date->format('M j') ?></p>
                     			     <?php }else{ ?>
                     			        <p class="download-icn"><img src="<?= get_template_directory_uri().'/assets/images/icn-calendar-blue.svg' ?>" /> <?= $start_date->format('M j') ?> - <?= $end_date->format('M j') ?></p>
                     			   <?php } ?>
+					<?php endif; ?>
 			    </div> 
 			    <div class="col-12 col-md-4">
 				
 					<?php 
-					if(get_field('end_time')): ?>
+					if(get_field('end_time') && get_field('start_time')): ?>
 			        <p class="download-icn"><img src="<?= get_template_directory_uri().'/assets/images/icn-clock-blue.svg' ?>" /> <?= get_field('start_time') ?> to <?= get_field('end_time') ?></p>
 					<?php else: ?>
-						<p class="download-icn"><img src="<?= get_template_directory_uri().'/assets/images/icn-clock-blue.svg' ?>" /> <?= get_field('start_time') ?></p>
+						<p class="download-icn"><img src="<?= get_template_directory_uri().'/assets/images/icn-clock-blue.svg' ?>" /> Time Not Specified</p>
 					<?php endif; ?>
 					</div>
 				<?php if(get_field('location')):?>

@@ -53,7 +53,43 @@ get_header();
                         </select>
 
                     </li>
+                    <li>
 
+                        <?php 
+
+                        $terms = get_terms( array(
+
+                            'taxonomy' => 'news_category',
+
+                            'hide_empty' => true,
+
+                        ) );
+
+                        $count = count( $terms );
+
+                        if ( $count > 0 ) { ?>
+
+                        <select class="filters-asc" id="cat-change" onchange="onCategoryChange(this)"> 
+
+                                <option value="Sort Categories" selected disabled>Sort Categories</option>
+
+                                <?php 
+
+                                    foreach ( $terms as $term ) { ?>
+
+                                <option value="<?= $term->term_id ?>"><?= $term->name ?></option>
+
+                                    <?php } ?>
+
+                            </select>
+
+                        <?php   }
+
+                        ?>
+
+
+
+                        </li>
 
 
                     <!-- <li>

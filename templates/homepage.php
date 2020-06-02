@@ -2,6 +2,18 @@
 <?php 
 get_header();
 ?>
+<?php
+if(get_field('covid_banner_toggle') == 'yes'):?>
+<div class="sdpi-container-f mt-5">
+    <a href="<?= get_field('covid_banner_link') ?>" style="text-decoration:none">
+    <section class="mb-0">
+        <div class="banner-img-small" style="background-image:url('<?= get_field('covid_banner') ?>')">
+            <h2><?= get_field('covid_banner_text') ?></h2>
+        </div>
+    </section>
+    </a>
+</div>
+<?php endif; ?>
 <section>
 <div class="sdpi-container-f">
     <h3 class="section-heading"><?= get_field('new_heading') ?></h3>
@@ -131,7 +143,25 @@ get_header();
 
 				</div>
   </div>
-</div>		
+</div>
+<div class="sdpi-container-f yellow-filled">
+  <div class="media-hub">
+  <h3 class="search-heading mb-5">@Media <strong>Hub</strong></h3>
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
+            <div class="twitter-hub">
+            <h4>Tweets By SDPI Pakistan</h4>
+            <hr>
+            <?php
+                echo do_shortcode("[fts_twitter twitter_name=SDPIPakistan tweets_count=6 cover_photo=no stats_bar=no show_retweets=no show_replies=no]");
+            ?>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>	
 <?php 
 get_footer();
 ?>

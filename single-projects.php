@@ -487,7 +487,7 @@ endif;
 		</section>
 		<section id="related-posts" class="clearfix">
 			<div class="container">
-            <div class="section-heading"><p class="pt-0 pb-5 font-weight-bold">Other Projects</p></div>
+            <div class="section-heading mb-3"><p class="pt-0 pb-0 font-weight-bold">Other Projects</p></div>
 				<div class="row">
                
 				<?php 

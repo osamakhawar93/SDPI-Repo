@@ -14,10 +14,13 @@ get_header();
         <div class="col-md-12 about-template-content text-center mb-3">
             <?= get_field('main_heading') ?>
         </div>
+        <?php if(get_field('main_icon')): ?>
         <div class="col-md-12 text-center">
-        <img class="about-icon" width="190" src="<?= get_field('main_icon') ?>" alt="Upcoming Trainings Icon"/>
+            <img class="about-icon" width="190" src="<?= get_field('main_icon') ?>" alt="Upcoming Trainings Icon"/>
         </div>
+        <?php endif; ?>
     </div>
+
     <div class="row mt-md-5">
         <div class="col-md-12 col-lg-12 col-xl-12 about-template-content">
             <div class="shortcode">

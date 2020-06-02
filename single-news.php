@@ -36,7 +36,7 @@ get_header();
 			
 			<section id="related-posts" class="clearfix">
 			<div class="container">
-			<div class="section-heading"><p class="pt-0 pb-5 font-weight-bold">More News</p></div>
+			<div class="section-heading mb-3"><p class="pt-0 pb-0 font-weight-bold">More News</p></div>
 				<div class="row">
 				<?php 
 					$related = get_posts (array( 'post_type'=>'news','post_status'=>'publish','numberposts'=>3, 'orderby' => 'rand' ));

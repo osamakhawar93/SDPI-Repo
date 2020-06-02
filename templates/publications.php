@@ -105,7 +105,7 @@ $years = $wpdb->get_results(
 
                         if ( $count > 0 ) { ?>
 
-                          <select class="filters-asc" onchange="onCategoryChange(this)"> 
+                          <select class="filters-asc" id="cat-change" onchange="onCategoryChange(this)"> 
 
                                 <option value="Sort Categories" selected disabled>Sort Categories</option>
 
