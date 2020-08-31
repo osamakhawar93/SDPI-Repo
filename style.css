@@ -1380,6 +1380,7 @@ body.logged-in .header.fixed{
      display: block;
      top: 0;
 }
+
  .timeline .event:before {
      left: -275px;
      top: 7px;
@@ -1389,6 +1390,9 @@ body.logged-in .header.fixed{
      min-width: 120px;
      color: #707070;
      font-size: 16px;
+}
+.page-id-6582 .timeline .event:before{
+	left: -310px;
 }
  .timeline .event:after {
      border: 1px solid #6A6a6a;

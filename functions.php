@@ -1340,7 +1340,7 @@ function sdpi_fetchNewArrivals($atts){
 			'orderby' => 'publish_date',
 			'order' => 'Desc',
 			'post_status'=> 'publish',
-			'meta_query' => array(
+			/* 'meta_query' => array(
 				'relation' => 'OR',
 				array(
 					'key' => 'new_post',
@@ -1351,8 +1351,7 @@ function sdpi_fetchNewArrivals($atts){
 					'key' => 'new_post',
 					'compare' => 'NOT EXISTS'
 				)
-				
-			)
+			)  */
 	);
 	$query = new WP_Query( $args );
 	$response = '';
@@ -2451,4 +2450,110 @@ function sdpi_fetchProjectsByThemes($atts){
 add_filter( 'site_transient_update_plugins', 'filter_plugin_updates' );
 
 
+// Fetch Posts and their taxonomies by slug : Made for Covid-categories
 
+function getPostsByCPTByTheirTaxonomies_function($atts){
+	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+
+	$att = shortcode_atts( array(
+		'post_type'=> 'post',
+		'taxonomy'=> '',
+		'term_id'=>''
+	), $atts );
+
+
+			$args = array(
+				'post_type' => $att['post_type'],
+				'post_status'=>'publish',
+				'paged' => $paged,
+				'posts_per_page'=>10,
+				'tax_query' => array(
+					array(
+						'taxonomy' => $att['taxonomy'],
+						'field' => 'term_id',
+						'terms' => $att['term_id'],
+					)
+				)
+			);
+	
+
+		$query = new WP_Query( $args );
+		if( $query->have_posts() ) :
+			$count = 0; 
+			echo '<div id="timeline-content" class="mb-3"><ul class="timeline">';
+				while( $query->have_posts() ): $query->the_post();
+					set_query_var( 'count', $count);
+					$response .= get_template_part('template-parts/timeline','content');	
+					$count++;
+				endwhile;
+				echo '</ul></div>';
+			echo '<div class="pagination mt-5 mb-5">';
+
+				wp_pagenavi( array( 'query' => $query)); 
+			
+			echo '</div>';
+
+			wp_reset_postdata(); wp_reset_query();
+		else :
+			echo 'No Upcoming '.$att['post_type'];
+		endif;
+
+}
+add_shortcode('getPostsByCPTByTheirTaxonomies','getPostsByCPTByTheirTaxonomies_function');
+
+
+
+// Getting News by Covid-19 Category && publications in Newsletter category
+
+function getNewsByCatAndPublicationsByCat_function($atts){
+	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+
+			$args = array(
+				'post_type' => array( 'news', 'publications','post' ),
+				'post_status'=>'publish',
+				'paged' => $paged,
+				'posts_per_page'=>10,
+				'tax_query' => array(
+					'relation'=>'OR',
+					array(
+						'taxonomy' => 'news_category',
+						'field' => 'term_id',
+						'terms' => 93,
+					),
+					array(
+						'taxonomy' => 'publication_category',
+						'field' => 'term_id',
+						'terms' => 17,
+					),
+					array(
+						'taxonomy' => 'category',
+						'field' => 'term_id',
+						'terms' => 95,
+					)
+				)
+			);
+	
+
+		$query = new WP_Query( $args );
+		if( $query->have_posts() ) :
+			$count = 0; 
+			echo '<div id="timeline-content" class="mb-3"><ul class="timeline">';
+				while( $query->have_posts() ): $query->the_post();
+					set_query_var( 'count', $count);
+					$response .= get_template_part('template-parts/timeline','content');	
+					$count++;
+				endwhile;
+				echo '</ul></div>';
+			echo '<div class="pagination mt-5 mb-5">';
+
+				wp_pagenavi( array( 'query' => $query)); 
+			
+			echo '</div>';
+
+			wp_reset_postdata(); wp_reset_query();
+		else :
+			echo 'No Upcoming '.$att['post_type'];
+		endif;
+
+}
+add_shortcode('getNewsByCatAndPublicationsByCat','getNewsByCatAndPublicationsByCat_function');
